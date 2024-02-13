@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi2v7ji26ai4c"]
+
+[ext_resource type="Script" path="res://测试脚本.gd" id="1_1geib"]
+[ext_resource type="PackedScene" uid="uid://bwu738mykdnlo" path="res://测试场景2.tscn" id="1_vm8v2"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 261.0
+offset_top = 144.0
+offset_right = 461.0
+offset_bottom = 444.0
+script = ExtResource("1_1geib")
+
+[node name="Control2" parent="." instance=ExtResource("1_vm8v2")]
+offset_left = 261.0
+offset_top = 144.0
+offset_right = 301.0
+offset_bottom = 184.0

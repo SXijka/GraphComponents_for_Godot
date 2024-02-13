@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bwu738mykdnlo"]
+
+[ext_resource type="Script" path="res://槽位.gd" id="1_w7log"]
+[ext_resource type="Resource" uid="uid://cioj1ykskafqu" path="res://new_resource.tres" id="2_dhd5n"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_w7log")
+"最小接口数量" = null
+"配置文件" = ExtResource("2_dhd5n")
