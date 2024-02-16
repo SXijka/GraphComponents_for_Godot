@@ -4,18 +4,10 @@
 [ext_resource type="Script" path="res://组件/点背景/点背景.gd" id="2_dudwk"]
 
 [node name="点背景" type="NinePatchRect"]
+self_modulate = Color(0.745098, 0.745098, 0.745098, 1)
 y_sort_enabled = true
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 100.0
+offset_bottom = 100.0
 texture = ExtResource("1_5jyvx")
 axis_stretch_horizontal = 2
 axis_stretch_vertical = 2

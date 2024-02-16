@@ -3,6 +3,7 @@
 class_name 点背景
 extends NinePatchRect
 
+@export var 同步容器: Control ## 当通过调整节点scale来实现点大小变化时，设置同步容器以避免可能的无法铺满或超出的情况。
 
 @export_range(32,248,1) var 间距: int = 64: ## 点之间的间距，单位为像素。如果希望调整点的大小，可以通过调整节点scale来实现。
 	set = _设置
@@ -28,6 +29,18 @@ func _ready() -> void:
 	_设置(间距)
 	_调整点颜色(点颜色)
 
+
+func _draw() -> void:
+	大小同步()
+
+
+func 大小同步():
+	if 同步容器:
+		var 新大小 = 同步容器.size / scale
+		set_deferred("size", 新大小)
+	
+
+
 func _配置点完整(是_完整的: bool):
 	点完整 = 是_完整的
 	if 点完整:
@@ -43,7 +56,8 @@ func _设置(值: Variant):
 		间距 = 值
 	else:
 		图案 = 值
-
+	if not texture:
+		return
 	var 间距_ := Vector2(间距,间距)
 	if 间距 < 32:
 		间距_ = Vector2(32,32)
