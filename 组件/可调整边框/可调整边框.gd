@@ -127,16 +127,20 @@ func _获取鼠标方向(事件: InputEvent):
 
 func _进行拖动(事件: InputEvent):
 	if not 允许拖动:
+		本体.mouse_default_cursor_shape = Control.CURSOR_ARROW
 		return
 	if 正在_调整:
 		正在_拖动 = false
+		本体.mouse_default_cursor_shape = Control.CURSOR_ARROW
 		return
 	if 事件 is InputEventMouseButton:
 		if 事件.button_index == MOUSE_BUTTON_LEFT and 事件.pressed:
 			_拖动量 = 本体.global_position - 本体.get_global_mouse_position()
 			正在_拖动 = true
+			本体.mouse_default_cursor_shape = Control.CURSOR_DRAG
 		elif 事件.button_index == MOUSE_BUTTON_LEFT and not 事件.pressed:
 			正在_拖动 = false
+			本体.mouse_default_cursor_shape = Control.CURSOR_ARROW
 	elif 事件 is InputEventMouseMotion and 正在_拖动:
 		global_position = get_global_mouse_position() + _拖动量
 
