@@ -12,6 +12,20 @@ config_version=5
 
 config/name="幻华破碎"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+boot_splash/image="res://项目配置/14域图标.png"
+config/icon="res://项目配置/次图标.png"
+config/windows_native_icon="res://项目配置/MoonBreak主图标.ico"
+
+[display]
+
+window/size/always_on_top=true
+
+[file_customization]
+
+folder_colors={
+"res://组件/": "green",
+"res://项目配置/": "yellow"
+}
 
 [rendering]
 
