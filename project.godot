@@ -19,12 +19,31 @@ config/windows_native_icon="res://项目配置/MoonBreak主图标.ico"
 [display]
 
 window/size/always_on_top=true
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [file_customization]
 
 folder_colors={
 "res://组件/": "green",
 "res://项目配置/": "yellow"
+}
+
+[gui]
+
+theme/custom_font="res://项目配置/得意黑.otf"
+
+[input]
+
+"UI放大"={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"button_mask":16,"position":Vector2(214, 18),"global_position":Vector2(218, 59),"factor":1.0,"button_index":5,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
+}
+"UI缩小"={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":true,"meta_pressed":false,"button_mask":8,"position":Vector2(250, 16),"global_position":Vector2(254, 57),"factor":1.0,"button_index":4,"canceled":false,"pressed":true,"double_click":false,"script":null)
+]
 }
 
 [rendering]
