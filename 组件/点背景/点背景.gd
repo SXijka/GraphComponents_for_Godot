@@ -28,17 +28,13 @@ func _ready() -> void:
 	_设置(图案)
 	_设置(间距)
 	_调整点颜色(点颜色)
-
-
-func _draw() -> void:
-	大小同步()
+	if 同步容器:
+		同步容器.resized.connect(大小同步)
 
 
 func 大小同步():
-	if 同步容器:
-		var 新大小 = 同步容器.size / scale
-		set_deferred("size", 新大小)
-	
+	var 新大小 = 同步容器.size / scale
+	set_deferred("size", 新大小)
 
 
 func _配置点完整(是_完整的: bool):
