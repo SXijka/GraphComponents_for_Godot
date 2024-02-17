@@ -1,0 +1,13 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://w8pcv1if78ub"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lqxtp"]
+bg_color = Color(0.290196, 0.431373, 1, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+
+[resource]
+resource_local_to_scene = true
+Label/font_sizes/font_size = 20
+PanelContainer/styles/panel = SubResource("StyleBoxFlat_lqxtp")
+VBoxContainer/constants/separation = 0

@@ -1,0 +1,28 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://d4magcxa3r2x6"]
+
+[ext_resource type="FontFile" uid="uid://bc7t5l5s1kv1o" path="res://项目配置/得意黑.otf" id="1_10kwg"]
+
+[sub_resource type="FontVariation" id="FontVariation_ydo4g"]
+base_font = ExtResource("1_10kwg")
+variation_embolden = -0.5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1vvx1"]
+content_margin_left = 4.0
+content_margin_right = 4.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p00wr"]
+resource_local_to_scene = true
+bg_color = Color(1, 1, 1, 0)
+draw_center = false
+border_width_left = 30
+border_color = Color(1, 1, 1, 0.5)
+border_blend = true
+
+[resource]
+resource_local_to_scene = true
+Label/colors/font_shadow_color = Color(0, 0, 0, 0.196078)
+Label/constants/shadow_outline_size = 8
+Label/font_sizes/font_size = 20
+Label/fonts/font = SubResource("FontVariation_ydo4g")
+Label/styles/normal = SubResource("StyleBoxEmpty_1vvx1")
+Panel/styles/panel = SubResource("StyleBoxFlat_p00wr")

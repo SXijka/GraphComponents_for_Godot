@@ -1,0 +1,129 @@
+[gd_scene load_steps=9 format=3 uid="uid://catrgda1jghjb"]
+
+[ext_resource type="Script" path="res://组件/可调整边框/可调整边框.gd" id="1_d88io"]
+[ext_resource type="Theme" uid="uid://w8pcv1if78ub" path="res://组件/节点/节点标题主题.tres" id="2_21rty"]
+[ext_resource type="Texture2D" uid="uid://5n1qnlesu0si" path="res://组件/点背景/背景图标.svg" id="2_jiqjp"]
+[ext_resource type="PackedScene" uid="uid://bfvnosgijqsuw" path="res://组件/点背景/点背景.tscn" id="2_x8aka"]
+[ext_resource type="Texture2D" uid="uid://c4a7pxn3sdnne" path="res://组件/节点/收起按钮.tres" id="3_dp3fg"]
+[ext_resource type="Theme" uid="uid://bi3qwhycdl2pj" path="res://组件/节点/节点面板主题.tres" id="4_iih1d"]
+[ext_resource type="PackedScene" uid="uid://cjmqfgvlymvaa" path="res://组件/接口/接口.tscn" id="7_68nad"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c5uln"]
+resource_local_to_scene = true
+atlas = ExtResource("2_jiqjp")
+region = Rect2(352, 96, 64, 64)
+
+[node name="节点" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 184.0
+offset_top = 41.0
+offset_right = 184.0
+offset_bottom = 41.0
+size_flags_vertical = 0
+
+[node name="可调整边框" type="MarginContainer" parent="." node_paths=PackedStringArray("本体")]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 132.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_d88io")
+"本体" = NodePath("节点内容")
+
+[node name="节点内容" type="VBoxContainer" parent="可调整边框"]
+layout_mode = 2
+mouse_filter = 0
+theme = ExtResource("2_21rty")
+
+[node name="标题栏背景" type="PanelContainer" parent="可调整边框/节点内容"]
+layout_mode = 2
+mouse_filter = 1
+theme = ExtResource("2_21rty")
+
+[node name="标题栏边距" type="MarginContainer" parent="可调整边框/节点内容/标题栏背景"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 2
+
+[node name="左右布局" type="HBoxContainer" parent="可调整边框/节点内容/标题栏背景/标题栏边距"]
+layout_mode = 2
+
+[node name="节点名称" type="Label" parent="可调整边框/节点内容/标题栏背景/标题栏边距/左右布局"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 5.0
+text = "节点"
+text_overrun_behavior = 3
+
+[node name="收起_展开按钮" type="Button" parent="可调整边框/节点内容/标题栏背景/标题栏边距/左右布局"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+size_flags_horizontal = 10
+toggle_mode = true
+icon = ExtResource("3_dp3fg")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="面板边距" type="PanelContainer" parent="可调整边框/节点内容"]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+theme = ExtResource("4_iih1d")
+
+[node name="Control" type="Control" parent="可调整边框/节点内容/面板边距"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="点背景" parent="可调整边框/节点内容/面板边距/Control" node_paths=PackedStringArray("同步容器") instance=ExtResource("2_x8aka")]
+self_modulate = Color(0.239216, 0.239216, 0.239216, 1)
+layout_mode = 1
+offset_right = 500.0
+offset_bottom = 1200.0
+scale = Vector2(0.2, 0.2)
+texture = SubResource("AtlasTexture_c5uln")
+"同步容器" = NodePath("..")
+"图案" = "十"
+"点颜色" = Color(0.239216, 0.239216, 0.239216, 1)
+
+[node name="面板" type="VBoxContainer" parent="可调整边框/节点内容/面板边距"]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="接口" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2
+
+[node name="接口2" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2
+"接口模式" = "输送模式"
+"接点颜色" = Color(0.517647, 0.666667, 0.988235, 1)
+
+[node name="接口3" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2
+"接点颜色" = Color(1, 0.312406, 0.237881, 1)
+
+[node name="接口4" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2
+"接口名称" = "此乃大天一流接口"
+"接点颜色" = Color(0.996078, 0.713726, 0.262745, 1)
+
+[node name="接口5" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2
+"接口模式" = "输送模式"
+
+[node name="接口6" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2
+
+[node name="接口7" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2
+
+[node name="接口8" parent="可调整边框/节点内容/面板边距/面板" instance=ExtResource("7_68nad")]
+layout_mode = 2

@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://yde2bno8poge"]
+
+[ext_resource type="Texture2D" uid="uid://4tqfewjxilqe" path="res://组件/节点/基础图标.svg" id="1_pvyr0"]
+
+[resource]
+atlas = ExtResource("1_pvyr0")
+region = Rect2(0, 0, 77, 77)

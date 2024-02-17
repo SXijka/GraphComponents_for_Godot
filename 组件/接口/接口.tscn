@@ -1,0 +1,47 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjmqfgvlymvaa"]
+
+[ext_resource type="Script" path="res://组件/接口/接口.gd" id="1_ykose"]
+[ext_resource type="Theme" uid="uid://d4magcxa3r2x6" path="res://组件/接口/接口主题.tres" id="3_5rugr"]
+[ext_resource type="Texture2D" uid="uid://yde2bno8poge" path="res://组件/接口/接口图形.tres" id="3_bbakn"]
+
+[node name="接口" type="HBoxContainer"]
+custom_minimum_size = Vector2(100, 30)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_ykose")
+"接口模式" = "接收模式"
+
+[node name="接点" type="Button" parent="."]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+icon = ExtResource("3_bbakn")
+flat = true
+expand_icon = true
+
+[node name="名称" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme = ExtResource("3_5rugr")
+text = "接口"
+horizontal_alignment = 2
+vertical_alignment = 1
+text_overrun_behavior = 3
+
+[node name="渐变背景" type="Panel" parent="名称"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("3_5rugr")

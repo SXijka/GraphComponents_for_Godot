@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="组件配置" load_steps=2 format=3 uid="uid://cioj1ykskafqu"]
-
-[ext_resource type="Script" path="res://组件配置.gd" id="1_185vr"]
-
-[resource]
-script = ExtResource("1_185vr")
-"默认名称" = "你好"
-hel = 3
