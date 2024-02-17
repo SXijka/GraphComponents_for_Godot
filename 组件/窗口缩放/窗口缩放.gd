@@ -11,7 +11,9 @@ const 存档文件地址: String = "user://窗口缩放系数/"  ## 各场景窗
 
 @export var 场景:String = "默认" ## 可导出变量场景，允许在编辑器中设置，用于定义不同场景的缩放系数。
 
-@onready var _显示条: ProgressBar = %"_显示条" # 获取ProgressBar节点，用于显示当前缩放比例。
+@export var 当前缩放倍数: float ## 当前缩放倍数，get-only，对该值的设置无效。
+
+@onready var _显示条: ProgressBar = $"HBoxContainer/VBoxContainer/VBoxContainer/显示条" # 获取ProgressBar节点，用于显示当前缩放比例。
 
 var _显示动画: Tween # 声明变量以存储Tween动画，用于渐变效果。
 
@@ -69,6 +71,8 @@ func _input(event: InputEvent) -> void:
 		_设置窗口缩放系数(系数)
 		# 更新ProgressBar的值。
 		_显示条.value = 系数
+		# 更新检查窗口系数显示
+		当前缩放倍数 = 系数
 
 	# 如果触发了缩小动作。
 	if event.is_action_pressed("UI缩小"):
@@ -87,6 +91,8 @@ func _input(event: InputEvent) -> void:
 		_设置窗口缩放系数(系数)
 		# 更新ProgressBar的值。
 		_显示条.value = 系数
+		# 更新检查窗口系数显示
+		当前缩放倍数 = 系数
 
 
 # 获取窗口缩放系数的函数。
