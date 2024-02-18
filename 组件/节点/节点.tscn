@@ -100,46 +100,50 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 0
 
-[node name="接口" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
+[node name="接口" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("所属节点") instance=ExtResource("7_68nad")]
 layout_mode = 2
+"所属节点" = NodePath("../../../../../..")
 "接点颜色" = Color(0, 0.388235, 0.313726, 1)
-"连接线宽" = 1.0
 
-[node name="接口2" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
+[node name="接口2" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("所属节点") instance=ExtResource("7_68nad")]
 layout_mode = 2
-"接口模式" = "输送模式"
+"所属节点" = NodePath("../../../../../..")
 "接点颜色" = Color(0.517647, 0.666667, 0.988235, 1)
-"连接线宽" = 1.0
+"允许连接同一节点接口" = true
 
-[node name="接口3" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
+[node name="接口3" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("所属节点") instance=ExtResource("7_68nad")]
 layout_mode = 2
+"所属节点" = NodePath("../../../../../..")
+"接口模式" = "接收模式"
 "接点颜色" = Color(1, 0.312406, 0.237881, 1)
-"连接线宽" = 1.0
 
-[node name="接口4" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
+[node name="接口4" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("配置文件") instance=ExtResource("7_68nad")]
 layout_mode = 2
 "接口名称" = "此乃大天一流接口"
+"接口模式" = "接收模式"
 "接点颜色" = Color(0.996078, 0.713726, 0.262745, 1)
-"连接线宽" = 1.0
+"连接线宽" = 8.0
+"配置文件" = NodePath("")
 
 [node name="接口5" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
 layout_mode = 2
-"接口模式" = "输送模式"
-"连接线宽" = 1.0
+"连接线宽" = 8.0
 
 [node name="接口6" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
 layout_mode = 2
-"连接线宽" = 1.0
+"接口模式" = "接收模式"
+"连接线宽" = 8.0
+"允许连接同一节点接口" = true
 
 [node name="接口7" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
 layout_mode = 2
 "接点颜色" = Color(0.235294, 0.235294, 0.235294, 1)
-"连接线宽" = 1.0
+"连接线宽" = 8.0
 
 [node name="接口8" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
 layout_mode = 2
 "接点颜色" = Color(0.419608, 0.701961, 0.639216, 1)
-"连接线宽" = 1.0
+"连接线宽" = 8.0
 
 [node name="底部背景" type="Panel" parent="可调整边框/节点内容/面板背景/面板容器"]
 modulate = Color(0.254902, 0.411765, 0.882353, 1)

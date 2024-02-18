@@ -46,6 +46,7 @@ flat = true
 expand_icon = true
 
 [node name="绘画" type="Control" parent="接点"]
+z_index = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
