@@ -1,26 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://bi2v7ji26ai4c"]
+[gd_scene load_steps=2 format=3 uid="uid://bi2v7ji26ai4c"]
 
-[ext_resource type="Script" path="res://测试脚本.gd" id="1_1geib"]
-[ext_resource type="PackedScene" uid="uid://bwu738mykdnlo" path="res://测试场景2.tscn" id="1_vm8v2"]
+[ext_resource type="PackedScene" uid="uid://catrgda1jghjb" path="res://组件/节点/节点.tscn" id="1_1u3x3"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -2.0
+offset_right = 4.0
+offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" type="Control" parent="."]
-anchors_preset = 0
-offset_left = 261.0
-offset_top = 144.0
-offset_right = 461.0
-offset_bottom = 444.0
-script = ExtResource("1_1geib")
+[node name="节点" parent="." instance=ExtResource("1_1u3x3")]
+offset_left = 224.0
+offset_top = 162.0
+offset_right = 224.0
+offset_bottom = 162.0
 
-[node name="Control2" parent="." instance=ExtResource("1_vm8v2")]
-offset_left = 261.0
-offset_top = 144.0
-offset_right = 301.0
-offset_bottom = 184.0
+[node name="节点2" parent="." instance=ExtResource("1_1u3x3")]
+offset_left = 711.0
+offset_top = 150.0
+offset_right = 711.0
+offset_bottom = 150.0
