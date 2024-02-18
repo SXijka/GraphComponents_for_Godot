@@ -12,6 +12,7 @@ config_version=5
 
 config/name="幻华破碎"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+run/max_fps=60
 boot_splash/image="res://项目配置/14域图标.png"
 config/icon="res://项目配置/次图标.png"
 config/windows_native_icon="res://项目配置/MoonBreak主图标.ico"
@@ -29,7 +30,7 @@ folder_colors={
 "res://组件/可调整边框/": "pink",
 "res://组件/点背景/": "pink",
 "res://组件/窗口缩放/": "pink",
-"res://组件/组件_基类/": "pink",
+"res://组件/连接代理/": "pink",
 "res://项目配置/": "yellow"
 }
 

@@ -15,15 +15,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_ykose")
-"接口模式" = "接收模式"
-
-[node name="接点" type="Button" parent="."]
-custom_minimum_size = Vector2(20, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-icon = ExtResource("3_bbakn")
-flat = true
-expand_icon = true
 
 [node name="名称" type="Label" parent="."]
 layout_mode = 2
@@ -31,7 +22,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = ExtResource("3_5rugr")
 text = "接口"
-horizontal_alignment = 2
 vertical_alignment = 1
 text_overrun_behavior = 3
 
@@ -45,3 +35,21 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("3_5rugr")
+
+[node name="接点" type="Button" parent="."]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+action_mode = 0
+icon = ExtResource("3_bbakn")
+flat = true
+expand_icon = true
+
+[node name="绘画" type="Control" parent="接点"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

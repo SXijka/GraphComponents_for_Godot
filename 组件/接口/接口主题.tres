@@ -17,6 +17,10 @@ draw_center = false
 border_width_left = 30
 border_color = Color(1, 1, 1, 0.5)
 border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [resource]
 resource_local_to_scene = true

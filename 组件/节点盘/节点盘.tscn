@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://c1rnxntsvafo5"]
+
+[ext_resource type="PackedScene" uid="uid://bfvnosgijqsuw" path="res://组件/点背景/点背景.tscn" id="1_o68i0"]
+[ext_resource type="Texture2D" uid="uid://5n1qnlesu0si" path="res://组件/点背景/背景图标.svg" id="2_hn1ih"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pqt87"]
+resource_local_to_scene = true
+atlas = ExtResource("2_hn1ih")
+region = Rect2(352, 352, 64, 64)
+
+[node name="节点盘" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_offset = Vector2(10, 0)
+scroll_limit_end = Vector2(0.81, 1.78)
+scroll_ignore_camera_zoom = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="点背景" parent="ParallaxBackground/ParallaxLayer" instance=ExtResource("1_o68i0")]
+self_modulate = Color(0.745098, 0.745098, 0.745098, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 500.0
+offset_bottom = 600.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_pqt87")
