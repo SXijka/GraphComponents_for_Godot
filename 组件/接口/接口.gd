@@ -43,7 +43,7 @@ const 连接线段数: int = 42 ## 若使用贝塞尔曲线绘制连接线，控
 
 @onready var _名称: Label = $"名称"
 @onready var _接点: Button = $"接点"
-@onready var _绘画: Control = $"接点/_绘画"
+@onready var _绘画: Control = $"接点/绘画"
 @onready var _渐变背景: StyleBoxFlat = $"名称/渐变背景".get_theme_stylebox("panel", "Panel")
 
 var 连接中: bool = false ## 仅发送者可尝试连接。
