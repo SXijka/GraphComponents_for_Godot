@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://catrgda1jghjb"]
+[gd_scene load_steps=9 format=3 uid="uid://catrgda1jghjb"]
 
 [ext_resource type="Script" path="res://组件/节点/节点.gd" id="1_cg6ec"]
 [ext_resource type="Script" path="res://组件/可调整边框/可调整边框.gd" id="1_d88io"]
@@ -7,7 +7,6 @@
 [ext_resource type="PackedScene" uid="uid://bfvnosgijqsuw" path="res://组件/点背景/点背景.tscn" id="2_x8aka"]
 [ext_resource type="Texture2D" uid="uid://c4a7pxn3sdnne" path="res://组件/节点/收起按钮.tres" id="3_dp3fg"]
 [ext_resource type="Theme" uid="uid://bi3qwhycdl2pj" path="res://组件/节点/节点面板主题.tres" id="4_iih1d"]
-[ext_resource type="PackedScene" uid="uid://cjmqfgvlymvaa" path="res://组件/接口/接口.tscn" id="7_68nad"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c5uln"]
 resource_local_to_scene = true
@@ -86,7 +85,7 @@ mouse_filter = 2
 self_modulate = Color(0.2, 0.2, 0.2, 1)
 layout_mode = 1
 offset_right = 500.0
-offset_bottom = 1225.0
+offset_bottom = 25.0
 scale = Vector2(0.2, 0.2)
 texture = SubResource("AtlasTexture_c5uln")
 "同步容器" = NodePath("..")
@@ -99,51 +98,6 @@ layout_mode = 2
 [node name="面板" type="VBoxContainer" parent="可调整边框/节点内容/面板背景/面板容器"]
 layout_mode = 2
 size_flags_vertical = 0
-
-[node name="接口" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("所属节点") instance=ExtResource("7_68nad")]
-layout_mode = 2
-"所属节点" = NodePath("../../../../../..")
-"接点颜色" = Color(0, 0.388235, 0.313726, 1)
-
-[node name="接口2" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("所属节点") instance=ExtResource("7_68nad")]
-layout_mode = 2
-"所属节点" = NodePath("../../../../../..")
-"接点颜色" = Color(0.517647, 0.666667, 0.988235, 1)
-"允许连接同一节点接口" = true
-
-[node name="接口3" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("所属节点") instance=ExtResource("7_68nad")]
-layout_mode = 2
-"所属节点" = NodePath("../../../../../..")
-"接口模式" = "接收模式"
-"接点颜色" = Color(1, 0.312406, 0.237881, 1)
-
-[node name="接口4" parent="可调整边框/节点内容/面板背景/面板容器/面板" node_paths=PackedStringArray("配置文件") instance=ExtResource("7_68nad")]
-layout_mode = 2
-"接口名称" = "此乃大天一流接口"
-"接口模式" = "接收模式"
-"接点颜色" = Color(0.996078, 0.713726, 0.262745, 1)
-"连接线宽" = 8.0
-"配置文件" = NodePath("")
-
-[node name="接口5" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
-layout_mode = 2
-"连接线宽" = 8.0
-
-[node name="接口6" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
-layout_mode = 2
-"接口模式" = "接收模式"
-"连接线宽" = 8.0
-"允许连接同一节点接口" = true
-
-[node name="接口7" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
-layout_mode = 2
-"接点颜色" = Color(0.235294, 0.235294, 0.235294, 1)
-"连接线宽" = 8.0
-
-[node name="接口8" parent="可调整边框/节点内容/面板背景/面板容器/面板" instance=ExtResource("7_68nad")]
-layout_mode = 2
-"接点颜色" = Color(0.419608, 0.701961, 0.639216, 1)
-"连接线宽" = 8.0
 
 [node name="底部背景" type="Panel" parent="可调整边框/节点内容/面板背景/面板容器"]
 modulate = Color(0.254902, 0.411765, 0.882353, 1)

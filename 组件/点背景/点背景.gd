@@ -30,6 +30,7 @@ func _ready() -> void:
 	_调整点颜色(点颜色)
 	if 同步容器:
 		同步容器.resized.connect(大小同步)
+		大小同步()
 
 
 func 大小同步():

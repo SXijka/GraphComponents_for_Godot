@@ -1,22 +1,29 @@
 @tool
 extends HBoxContainer
 class_name 接口
+## 用于节点之间图形化的关联与交互，分为接收模式与发送模式，接口与接口之间可以连接。
+
 
 static var 当前鼠标所在接口: 接口 ## 检测当前鼠标所在的接口，若当前鼠标不在任何接口，则为null。
 
 const 连接线曲率: float = 100 ## 若使用贝塞尔曲线绘制连接线，控制连接线的曲率，数值越大，曲线越明显。
-
 const 连接线段数: int = 42 ## 若使用贝塞尔曲线绘制连接线，控制连接线的段数，段数越多，曲线越平滑。
 
-@export_subgroup("属性配置")
+
+@export_subgroup("通用属性")
 @export var 接口名称: String = "接口":
 	set = _设置接口名称
+
+@export var 所属节点: 节点 ## 该接口所属的节点，出于可扩展性的考虑，需要手动指定。
 
 @export_enum("发送模式", "接收模式") var 接口模式: String = "发送模式": ## 该接口用于发送多个连接，还是接收单个连接。
 	set = _设置接口模式
 
-@export var 所属节点: 节点 ## 该接口所属的节点。
+@export_color_no_alpha var 接点颜色: Color = Color.WHITE: ## 接点和接口名称下方渐变背景的颜色。
+	set = _设置接点颜色
 
+
+@export_subgroup("接收模式属性")
 ## 仅接收者可以拥有配置文件。
 ## 若接收者未指定配置文件，则当发送者调用[method 连接配置.连接判断]时，直接得到true，也就是允许建立连接。[br]
 ## 该变量的配置方法: [br]
@@ -27,14 +34,17 @@ const 连接线段数: int = 42 ## 若使用贝塞尔曲线绘制连接线，控
 @export var 配置文件: 连接配置:
 	set = _设置配置文件
 
-@export var 允许连接同一节点接口: bool = false ## 若为true，则该接口可以连接至自身所属节点的接口，这可能会导致循环。
+@export var 允许断开: bool = true ## 是否允许接收者断开。仅接收模式有效。
 
 
-@export_subgroup("接口UI绘制")
+@export_subgroup("发送模式属性")
+@export var 允许连接同一节点接口: bool = false ## 若为true，则该接口可以连接至自身所属节点的接口，这可能会导致循环。仅发送模式有效。
+
+@export var 替代断开: bool = true ## 当尝试连接至某一已有发送者的接收接口时，若允许断开，是维持原发送者还是将发送者替换为该接口。仅发送模式有效。
+
 @export var 使用直线绘制连接线: bool = false ##　使用贝塞尔曲线还是直线来绘制连接线。
 
-@export_color_no_alpha var 接点颜色: Color = Color.WHITE:
-	set = _设置接点颜色
+@export var 虚直线: bool = false ## 如果使用直线作为连接线，则以虚线的方式来绘制。
 
 @export var 连接线颜色: Color = Color.GRAY ## 仅发送者可绘制连接线。
 
@@ -46,18 +56,26 @@ const 连接线段数: int = 42 ## 若使用贝塞尔曲线绘制连接线，控
 @onready var _绘画: Control = $"接点/绘画"
 @onready var _渐变背景: StyleBoxFlat = $"名称/渐变背景".get_theme_stylebox("panel", "Panel")
 
-var 连接中: bool = false ## 仅发送者可尝试连接。
+
+var 连接中: bool = false ## 是否正尝试连接，此间绘制接点至鼠标的连接线。仅发送者可尝试连接。
 
 var 代理: 连接代理 = 连接代理.new(self) ## 用于管理接口连接功能。
+
+
+func _init() -> void:
+	add_to_group("接口")
 
 
 func _ready():
 	_设置接口名称(接口名称)
 	_设置接口模式(接口模式)
 	_设置接点颜色(接点颜色)
-	_接点.pressed.connect(_开始连接)
+	_接点.pressed.connect(_当接点按下)
 	if 接口模式 == "发送模式":
 		_绘画.draw.connect(_绘制连接线)
+	elif 接口模式 == "接收模式":
+		_接点.button_mask = MOUSE_BUTTON_MASK_RIGHT
+		_接点.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
 
 
 func _process(delta: float) -> void:
@@ -142,23 +160,47 @@ func _设置配置文件(新配置: 连接配置):
 	新配置.所属接口 = self
 
 
-func _开始连接():
+func _当接点按下():
+	print(代理.获取_接收者(),"\r\n",代理.发送者)
 	if 接口模式 == "接收模式":
+		if not 允许断开:
+			return
+		if 代理 and 代理.发送者:
+			代理.断开于(代理.发送者)
+			if 配置文件:
+				配置文件.断开时执行一次()
 		return
-	连接中 = true
+	if 接口模式 == "发送模式":
+		连接中 = true
 
 
 func _检测连接() -> bool:
 	if not 当前鼠标所在接口:
 		return false
+
 	if 当前鼠标所在接口 == self:
 		return false
+
 	if not 允许连接同一节点接口:
 		var 目标接口节点 = 当前鼠标所在接口.所属节点
 		if 目标接口节点 and 目标接口节点 == 所属节点:
 			return false
+
 	if 当前鼠标所在接口.接口模式 != "接收模式":
 		return false
+
+	if (当前鼠标所在接口.代理.发送者 != 代理.默认发送者) or 当前鼠标所在接口.代理.发送者 != null:
+		if not 当前鼠标所在接口.允许断开:
+			return false
+		if not 替代断开:
+			return false
+		if (not 当前鼠标所在接口.配置文件) or 当前鼠标所在接口.配置文件.连接判断(self):
+			当前鼠标所在接口.代理.断开于(当前鼠标所在接口.代理.发送者)
+			if 当前鼠标所在接口.配置文件:
+				当前鼠标所在接口.配置文件.断开时执行一次()
+			return true
+		return false
+
 	if not 当前鼠标所在接口.配置文件:
 		return true
 	return 当前鼠标所在接口.配置文件.连接判断(self)
@@ -167,19 +209,25 @@ func _检测连接() -> bool:
 func _绘制连接线():
 	if 连接中:
 		if 使用直线绘制连接线:
-			_绘画.draw_line(_绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线颜色, 连接线宽, true)
+			if 虚直线:
+				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线颜色, 连接线宽, 3 * 连接线宽, true)
+			else:
+				_绘画.draw_line(_绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线颜色, 连接线宽, true)
 		else:
-			绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线曲率 , 连接线段数)
+			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线曲率 , 连接线段数)
 			
 	for 已有接收者: 连接代理 in 代理.获取_接收者():
 		var 接收者相对绘画的位置 = 已有接收者.所属接口._绘画.get_global_rect().get_center() - _绘画.global_position
 		if 使用直线绘制连接线:
-			_绘画.draw_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, true)
+			if 虚直线:
+				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, 3 * 连接线宽, true)
+			else:
+				_绘画.draw_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, true)
 		else:
-			绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线曲率, 连接线段数)
+			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线曲率, 连接线段数)
 
 
-func 绘制贝塞尔曲线(绘制者: Control, 起始点: Vector2, 结束点: Vector2, 曲率: float, 段数: int):
+func _绘制贝塞尔曲线(绘制者: Control, 起始点: Vector2, 结束点: Vector2, 曲率: float, 段数: int):
 	var 各点:PackedVector2Array = []
 	var 控制点A = 起始点 + Vector2(曲率, 0)
 	var 控制点B = 结束点 - Vector2(曲率, 0)
@@ -187,14 +235,14 @@ func 绘制贝塞尔曲线(绘制者: Control, 起始点: Vector2, 结束点: Ve
 	for i in range(段数 + 1):
 		var 点所在 = i / float(段数)
 
-		var 点 = 贝塞尔插值(起始点, 控制点A, 控制点B, 结束点, 点所在)
+		var 点 = _贝塞尔插值(起始点, 控制点A, 控制点B, 结束点, 点所在)
 		各点.append(点)
 
 	# 绘制曲线
 	绘制者.draw_polyline(各点, 连接线颜色, 连接线宽, true)
 
 
-func 贝塞尔插值(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, t: float) -> Vector2:
+func _贝塞尔插值(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, t: float) -> Vector2:
 	var u = 1.0 - t
 	var tt = t * t
 	var uu = u * u

@@ -28,4 +28,3 @@ Label/styles/normal = SubResource("StyleBoxEmpty_155a4")
 PanelBottom/base_type = &"Panel"
 PanelBottom/styles/panel = SubResource("StyleBoxFlat_mbrih")
 PanelContainer/styles/panel = SubResource("StyleBoxFlat_fv6uj")
-VBoxContainer/constants/separation = 0
