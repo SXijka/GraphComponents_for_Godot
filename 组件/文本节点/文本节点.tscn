@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://br1mcek6akb36"]
+
+[ext_resource type="Script" path="res://组件/文本节点/文本节点.gd" id="1_xxgr6"]
+[ext_resource type="PackedScene" uid="uid://catrgda1jghjb" path="res://组件/节点/节点.tscn" id="1_yt112"]
+
+[node name="文本节点" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_xxgr6")
+
+[node name="节点" parent="." node_paths=PackedStringArray("初始加载内容") instance=ExtResource("1_yt112")]
+layout_mode = 0
+"初始加载内容" = [NodePath("滚动框")]
+"内容扩展对齐" = true
+
+[node name="滚动框" type="ScrollContainer" parent="节点"]
+custom_minimum_size = Vector2(100, 30)
+layout_mode = 0
+offset_right = 100.0
+offset_bottom = 30.0
+follow_focus = true
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="富文本" type="RichTextLabel" parent="节点/滚动框"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
