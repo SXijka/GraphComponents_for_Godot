@@ -210,21 +210,33 @@ func _绘制连接线():
 	if 连接中:
 		if 使用直线绘制连接线:
 			if 虚直线:
-				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线颜色, 连接线宽, 3 * 连接线宽, true)
+				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线颜色, 连接线宽, 3 * 连接线宽, false)
+				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
+				_绘画.draw_circle(_绘画.get_local_mouse_position(), 连接线宽/2, 连接线颜色)
 			else:
 				_绘画.draw_line(_绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线颜色, 连接线宽, true)
+				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
+				_绘画.draw_circle(_绘画.get_local_mouse_position(), 连接线宽/2, 连接线颜色)
 		else:
 			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线曲率 , 连接线段数)
+			_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
+			_绘画.draw_circle(_绘画.get_local_mouse_position(), 连接线宽/2, 连接线颜色)
 			
 	for 已有接收者: 连接代理 in 代理.获取_接收者():
 		var 接收者相对绘画的位置 = 已有接收者.所属接口._绘画.get_global_rect().get_center() - _绘画.global_position
 		if 使用直线绘制连接线:
 			if 虚直线:
-				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, 3 * 连接线宽, true)
+				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, 3 * 连接线宽, false)
+				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
+				_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 连接线颜色)
 			else:
 				_绘画.draw_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, true)
+				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
+				_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 连接线颜色)
 		else:
 			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线曲率, 连接线段数)
+			_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
+			_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 连接线颜色)
 
 
 func _绘制贝塞尔曲线(绘制者: Control, 起始点: Vector2, 结束点: Vector2, 曲率: float, 段数: int):
