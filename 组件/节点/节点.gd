@@ -18,19 +18,24 @@ extends Control
 @export_enum("点","叉","十","一") var 背景点图案: String = "十":
 	set = _设置背景点图案
 
-@export var 展开: bool = true
+@export var 自动获取子节点为内容: bool = false ## 是否自动获取节点实例下的子节点作为内容物加入节点。
+
+@export var 允许垂直调整: bool = false:
+	set = _设置垂直调整
 
 @export var 初始加载内容: Array[Control] = [] ## 在节点就绪时将其中的项加入节点，空值被忽略，各项自动取消隐藏。
 
-@export var 自动获取子节点为内容: bool = false ## 是否自动获取节点实例下的子节点作为内容物加入节点。
+@export var 内容扩展对齐: bool = false ## 在将内容加入节点时设置其为垂直扩展对齐，特别适用于仅有一个内容的节点。
 
 @onready var 节点名称: Label = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/节点名称"
-@onready var 底部背景: Panel = $"可调整边框/节点内容/面板背景/面板容器/底部背景"
+@onready var 底部背景: Panel = $"可调整边框/节点内容/面板背景/底部背景"
 @onready var 标题栏背景: PanelContainer = $"可调整边框/节点内容/标题栏背景"
 @onready var 面板背景: PanelContainer = $"可调整边框/节点内容/面板背景"
 @onready var 背景点: 点背景 = $"可调整边框/节点内容/面板背景/背景容器/点背景"
 @onready var 面板: VBoxContainer = $"可调整边框/节点内容/面板背景/面板容器/面板"
 @onready var 边框: 可调整边框 = $"可调整边框"
+@onready var 隐蔽连接线按钮: Button = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/隐蔽连接线按钮"
+
 
 func _init() -> void:
 	add_to_group("节点")
@@ -42,17 +47,14 @@ func _ready() -> void:
 	_设置背景颜色(背景颜色)
 	_设置背景点图案(背景点图案)
 	_设置背景点颜色(背景点颜色)
+	_设置垂直调整(允许垂直调整)
+	隐蔽连接线按钮.toggled.connect(接口连接线隐蔽)
 
 	if not Engine.is_editor_hint():
 		添加_多个内容(初始加载内容)
 
 		if 自动获取子节点为内容:
-			if get_child_count() <= 1:
-				pass
-			var 子节点 := get_children()
-			子节点.erase(边框)
-			for i in 子节点:
-				添加_内容(i as Control)
+			添加_多个内容(获取实例子节点())
 
 
 func 添加_内容(内容物: Control) -> void: ## 向节点中添加内容物，自动取消隐藏。
@@ -61,18 +63,32 @@ func 添加_内容(内容物: Control) -> void: ## 向节点中添加内容物�
 		内容物.reparent(面板)
 	else:
 		面板.add_child(内容物)
+	if not 内容扩展对齐:
+		return
+	for 属性 in 内容物.get_property_list():
+		if 属性["name"] == "size_flags_vertical":
+			内容物.set("size_flags_vertical", SIZE_EXPAND_FILL)
 
 
-func 添加_多个内容(内容物: Array[Control]) -> void: ## 传入一个列表，将其中所有项均作为内容物加入节点，自动取消隐藏。
-	for i in 内容物:
-		if not i:
+func 添加_多个内容(内容物集: Array[Control]) -> void: ## 传入一个列表，将其中所有项均作为内容物加入节点，自动取消隐藏。
+	for 内容物 in 内容物集:
+		if not 内容物:
 			continue
-		elif i.get_parent():
-			i.show()
-			i.reparent(面板)
+
+		elif 内容物.get_parent():
+			内容物.show()
+			内容物.reparent(面板)
+
 		else:
-			i.show()
-			面板.add_child(i)
+			内容物.show()
+			面板.add_child(内容物)
+
+		if not 内容扩展对齐:
+			continue
+		for 属性 in 内容物.get_property_list():
+			if 属性["name"] != "size_flags_vertical":
+				continue
+			内容物.set("size_flags_vertical", SIZE_EXPAND_FILL)
 
 
 func 弹出_内容(内容物: Control) -> Control: ## 将一个内容物移出节点并返回，若返回值为null，则节点不包含该内容物。
@@ -105,7 +121,9 @@ func 获取_内容() -> Array[Control]:
 	if 面板.get_child_count() == 0:
 		return []
 	else:
-		return 面板.get_children() as Array[Control]
+		var 内容物集: Array[Control] = []
+		内容物集.append_array(面板.get_children())
+		return 内容物集
 
 
 func 存在_内容(内容物: Control) -> bool:
@@ -114,6 +132,20 @@ func 存在_内容(内容物: Control) -> bool:
 	if 内容物 not in 获取_内容():
 		return false
 	return true
+
+
+func 接口连接线隐蔽(是隐蔽: bool):
+	print(是隐蔽)
+	for i in 获取_内容():
+		if i is 接口:
+			i.隐蔽已有连接线 = 是隐蔽
+
+
+func 获取实例子节点() -> Array[Control]:
+	var 节点集: Array[Control] = []
+	节点集.append_array(get_children())
+	节点集.erase(边框)
+	return 节点集
 
 
 func _设置名称(新名称):
@@ -150,6 +182,12 @@ func _设置背景点颜色(新颜色: Color):
 func _设置背景点图案(新图案: String):
 	背景点图案 = 新图案
 	if not 背景点:
-		print("na")
 		return
 	背景点.图案 = 新图案
+
+
+func _设置垂直调整(允许: bool):
+	允许垂直调整 = 允许
+	if not 边框:
+		return
+	边框.允许垂直调整 = 允许

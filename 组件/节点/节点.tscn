@@ -18,11 +18,12 @@ layout_mode = 3
 anchors_preset = 0
 size_flags_vertical = 0
 script = ExtResource("1_cg6ec")
+"允许垂直调整" = true
 
 [node name="可调整边框" type="MarginContainer" parent="." node_paths=PackedStringArray("本体")]
 layout_mode = 1
 offset_right = 110.0
-offset_bottom = 280.0
+offset_bottom = 45.0
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
@@ -32,7 +33,6 @@ script = ExtResource("1_d88io")
 
 [node name="节点内容" type="VBoxContainer" parent="可调整边框"]
 layout_mode = 2
-size_flags_vertical = 0
 mouse_filter = 0
 theme = ExtResource("2_21rty")
 
@@ -60,10 +60,11 @@ size_flags_stretch_ratio = 5.0
 text = "节点"
 vertical_alignment = 1
 
-[node name="收起_展开按钮" type="Button" parent="可调整边框/节点内容/标题栏背景/标题栏边距/左右布局"]
+[node name="隐蔽连接线按钮" type="Button" parent="可调整边框/节点内容/标题栏背景/标题栏边距/左右布局"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 10
+tooltip_text = "隐蔽/显示 已建立的连接线"
 toggle_mode = true
 icon = ExtResource("3_dp3fg")
 flat = true
@@ -73,7 +74,7 @@ expand_icon = true
 [node name="面板背景" type="PanelContainer" parent="可调整边框/节点内容"]
 self_modulate = Color(0.15, 0.15, 0.15, 1)
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 3
 mouse_filter = 1
 theme = ExtResource("4_iih1d")
 
@@ -97,12 +98,12 @@ layout_mode = 2
 
 [node name="面板" type="VBoxContainer" parent="可调整边框/节点内容/面板背景/面板容器"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_vertical = 3
 
-[node name="底部背景" type="Panel" parent="可调整边框/节点内容/面板背景/面板容器"]
+[node name="底部背景" type="Panel" parent="可调整边框/节点内容/面板背景"]
 modulate = Color(0.254902, 0.411765, 0.882353, 1)
 custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
-size_flags_vertical = 10
+size_flags_vertical = 8
 theme = ExtResource("4_iih1d")
 theme_type_variation = &"PanelBottom"

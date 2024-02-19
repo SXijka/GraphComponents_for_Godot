@@ -31,6 +31,7 @@ folder_colors={
 "res://组件/接口/": "pink",
 "res://组件/点背景/": "pink",
 "res://组件/窗口缩放/": "pink",
+"res://组件/节点/": "pink",
 "res://组件/连接代理/": "pink",
 "res://项目配置/": "yellow"
 }

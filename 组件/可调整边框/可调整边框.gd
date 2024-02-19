@@ -12,7 +12,9 @@ extends MarginContainer
 	set = _设置边框宽度
 
 @export var 允许调整: bool = true: ## 若为false，则无法进行调整。
-	set = 许可调整
+	set = _许可调整
+
+@export var 允许垂直调整: bool = true ## 控制是否允许垂直调整。
 
 @export var 允许拖动: bool = true ## 若为false，则无法进行拖动。
 
@@ -29,6 +31,20 @@ func _ready() -> void:
 	_设置边框宽度(边框宽度)
 	本体.connect("gui_input", _进行拖动)
 	connect("gui_input", _获取鼠标方向)
+
+
+func 获取本体() -> Control:
+	if Engine.is_editor_hint():
+		return 本体
+	if 本体 == null and not is_inside_tree():
+		push_warning(self, "在进入场景树前试图获取本体，检查器内序列化值尚未填入，当前变量“本体”为null")
+	elif 本体 == null:
+		if get_child_count() != 0:
+			本体 = get_child(0)
+			push_warning(self, "未指定本体， 已获取第一个子节点为本体")
+		else:
+			push_warning(self, "未指定本体， 其下没有子节点， 当前变量“本体”为null")
+	return 本体
 
 
 func _设置边框宽度(新宽度):
@@ -48,6 +64,9 @@ func _进行调整(方向: String, 相对运动: Vector2):
 	# 反转最近方向可得到当前的方向
 	if 方向.is_empty():
 		方向 = _最近方向
+	# 若不允许垂直调整，则直接返回，不进行垂直方向的调整
+	if not 允许垂直调整 and (方向 == "上" or 方向 == "下" or 方向.contains("上") or 方向.contains("下")):
+		return 
 	match 方向:
 		"上":
 			新尺寸.y -= 相对运动.y
@@ -145,22 +164,8 @@ func _进行拖动(事件: InputEvent):
 		global_position = get_global_mouse_position() + _拖动量
 
 
-func 许可调整(允许: bool):
+func _许可调整(允许: bool):
 	允许调整 = 允许
 	if not 允许:
 		mouse_default_cursor_shape = Control.CURSOR_ARROW
-
-
-func 获取本体() -> Control:
-	if Engine.is_editor_hint():
-		return 本体
-	if 本体 == null and not is_inside_tree():
-		push_warning(self, "在进入场景树前试图获取本体，检查器内序列化值尚未填入，当前变量“本体”为null")
-	elif 本体 == null:
-		if get_child_count() != 0:
-			本体 = get_child(0)
-			push_warning(self, "未指定本体， 已获取第一个子节点为本体")
-		else:
-			push_warning(self, "未指定本体， 其下没有子节点， 当前变量“本体”为null")
-	return 本体
 

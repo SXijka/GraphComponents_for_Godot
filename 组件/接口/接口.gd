@@ -1,17 +1,20 @@
 @tool
 extends HBoxContainer
 class_name 接口
-## 用于节点之间图形化的关联与交互，分为接收模式与发送模式，接口与接口之间可以连接。
+## 用于节点之间图形化的关联与交互，分为接收模式与发送模式，接口与接口之间可以连接。[br]
+## 当作为发送接口时，在接点处按住并拖动连接线至接收接口可尝试连接。[br]
+## 当作为接收接口时，左键是切换连接线隐蔽状态，中键是切换直曲线，右键是尝试断开。
+
 
 
 static var 当前鼠标所在接口: 接口 ## 检测当前鼠标所在的接口，若当前鼠标不在任何接口，则为null。
 
 const 连接线曲率: float = 100 ## 若使用贝塞尔曲线绘制连接线，控制连接线的曲率，数值越大，曲线越明显。
 const 连接线段数: int = 42 ## 若使用贝塞尔曲线绘制连接线，控制连接线的段数，段数越多，曲线越平滑。
-
+const 隐蔽连接线暗度: float = 0.5 ## 若对连接新实行隐蔽，则其较正常连接线颜色的暗度。
 
 @export_subgroup("通用属性")
-@export var 接口名称: String = "接口":
+@export var 接口名称: String = "接口": ## 更改该名称会同步对应到UI的名称显示上。
 	set = _设置接口名称
 
 @export var 所属节点: 节点 ## 该接口所属的节点，出于可扩展性的考虑，需要手动指定。
@@ -50,6 +53,7 @@ const 连接线段数: int = 42 ## 若使用贝塞尔曲线绘制连接线，控
 
 @export var 连接线宽: float = 4 ## 仅发送者可绘制连接线。
 
+@export var 隐蔽已有连接线: bool = false ## 若为false，除尝试连接时外，隐藏该节点的所有连接线。
 
 @onready var _名称: Label = $"名称"
 @onready var _接点: Button = $"接点"
@@ -73,6 +77,16 @@ func _ready():
 	_接点.pressed.connect(_当接点按下)
 	if 接口模式 == "发送模式":
 		_绘画.draw.connect(_绘制连接线)
+		_接点.gui_input.connect(func(事件:InputEvent):
+			if not 事件 is InputEventMouseButton:
+				return
+			if 事件.pressed:
+				return
+			if 事件.button_index == MOUSE_BUTTON_MIDDLE:
+				使用直线绘制连接线 = !使用直线绘制连接线
+			if 事件.button_index == MOUSE_BUTTON_MASK_RIGHT:
+				隐蔽已有连接线 = !隐蔽已有连接线)
+
 	elif 接口模式 == "接收模式":
 		_接点.button_mask = MOUSE_BUTTON_MASK_RIGHT
 		_接点.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
@@ -161,7 +175,6 @@ func _设置配置文件(新配置: 连接配置):
 
 
 func _当接点按下():
-	print(代理.获取_接收者(),"\r\n",代理.发送者)
 	if 接口模式 == "接收模式":
 		if not 允许断开:
 			return
@@ -218,28 +231,32 @@ func _绘制连接线():
 				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
 				_绘画.draw_circle(_绘画.get_local_mouse_position(), 连接线宽/2, 连接线颜色)
 		else:
-			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线曲率 , 连接线段数)
+			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), _绘画.get_local_mouse_position(), 连接线曲率 , 连接线段数, 连接线颜色)
 			_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
 			_绘画.draw_circle(_绘画.get_local_mouse_position(), 连接线宽/2, 连接线颜色)
-			
+	
+	var 已有连接线颜色 = 连接线颜色
+	if 隐蔽已有连接线:
+		已有连接线颜色 = 连接线颜色.darkened(隐蔽连接线暗度)
+		已有连接线颜色.a = 0.5
 	for 已有接收者: 连接代理 in 代理.获取_接收者():
 		var 接收者相对绘画的位置 = 已有接收者.所属接口._绘画.get_global_rect().get_center() - _绘画.global_position
 		if 使用直线绘制连接线:
 			if 虚直线:
-				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, 3 * 连接线宽, false)
-				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
-				_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 连接线颜色)
+				_绘画.draw_dashed_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 已有连接线颜色, 连接线宽, 3 * 连接线宽, false)
+				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 已有连接线颜色)
+				_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 已有连接线颜色)
 			else:
-				_绘画.draw_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线颜色, 连接线宽, true)
-				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
-				_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 连接线颜色)
+				_绘画.draw_line(_绘画.get_rect().get_center(), 接收者相对绘画的位置, 已有连接线颜色, 连接线宽, true)
+				_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 已有连接线颜色)
+				_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 已有连接线颜色)
 		else:
-			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线曲率, 连接线段数)
-			_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 连接线颜色)
-			_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 连接线颜色)
+			_绘制贝塞尔曲线(_绘画, _绘画.get_rect().get_center(), 接收者相对绘画的位置, 连接线曲率, 连接线段数, 已有连接线颜色)
+			_绘画.draw_circle(_绘画.get_rect().get_center(), 连接线宽/2, 已有连接线颜色)
+			_绘画.draw_circle(接收者相对绘画的位置, 连接线宽/2, 已有连接线颜色)
 
 
-func _绘制贝塞尔曲线(绘制者: Control, 起始点: Vector2, 结束点: Vector2, 曲率: float, 段数: int):
+func _绘制贝塞尔曲线(绘制者: Control, 起始点: Vector2, 结束点: Vector2, 曲率: float, 段数: int, 颜色: Color):
 	var 各点:PackedVector2Array = []
 	var 控制点A = 起始点 + Vector2(曲率, 0)
 	var 控制点B = 结束点 - Vector2(曲率, 0)
@@ -251,7 +268,7 @@ func _绘制贝塞尔曲线(绘制者: Control, 起始点: Vector2, 结束点: V
 		各点.append(点)
 
 	# 绘制曲线
-	绘制者.draw_polyline(各点, 连接线颜色, 连接线宽, true)
+	绘制者.draw_polyline(各点, 颜色, 连接线宽, true)
 
 
 func _贝塞尔插值(p0: Vector2, p1: Vector2, p2: Vector2, p3: Vector2, t: float) -> Vector2:
