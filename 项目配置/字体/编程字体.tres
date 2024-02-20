@@ -1,0 +1,9 @@
+[gd_resource type="FontVariation" load_steps=4 format=3 uid="uid://b0flewg5r4bi5"]
+
+[ext_resource type="FontFile" uid="uid://c316gj0mebr0n" path="res://项目配置/字体/JetBrainsMono-Medium.ttf" id="1_y5dw7"]
+[ext_resource type="FontFile" uid="uid://bb0m8gnqj2kln" path="res://项目配置/字体/落霞文楷GB-Regular.TTF" id="2_bmc8q"]
+[ext_resource type="FontFile" uid="uid://sp6dcd820rj6" path="res://项目配置/字体/落霞文楷GB-Bold.TTF" id="3_qjjga"]
+
+[resource]
+fallbacks = Array[Font]([ExtResource("2_bmc8q"), ExtResource("3_qjjga")])
+base_font = ExtResource("1_y5dw7")

@@ -38,7 +38,7 @@ folder_colors={
 
 [gui]
 
-theme/custom_font="res://项目配置/得意黑.otf"
+theme/custom_font="res://项目配置/字体/得意黑.otf"
 
 [input]
 
