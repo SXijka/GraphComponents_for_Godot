@@ -6,7 +6,7 @@ extends MarginContainer
 ## 可调整边框的本体，其gui输入影响判断边框的调整和拖动。
 ## 若运行时未设置本体，会自动尝试获取该节点下第一个子节点为本体。
 @export var 本体: Control:
-	get = 获取本体
+	get = _获取本体
 
 @export var 边框宽度: float = 5: ## 该参数用以更方便地设置边框宽度。
 	set = _设置边框宽度
@@ -33,7 +33,7 @@ func _ready() -> void:
 	connect("gui_input", _获取鼠标方向)
 
 
-func 获取本体() -> Control:
+func _获取本体() -> Control:
 	if Engine.is_editor_hint():
 		return 本体
 	if 本体 == null and not is_inside_tree():

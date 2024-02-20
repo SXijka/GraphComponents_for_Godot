@@ -10,8 +10,10 @@ script = ExtResource("1_xxgr6")
 
 [node name="节点" parent="." node_paths=PackedStringArray("初始加载内容") instance=ExtResource("1_yt112")]
 layout_mode = 0
+"允许垂直调整" = true
 "初始加载内容" = [NodePath("滚动框")]
 "内容扩展对齐" = true
+"隐藏面板" = false
 
 [node name="滚动框" type="ScrollContainer" parent="节点"]
 custom_minimum_size = Vector2(100, 30)
@@ -30,3 +32,11 @@ mouse_filter = 1
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
+
+[node name="Control" type="ReferenceRect" parent="."]
+layout_mode = 0
+offset_left = 596.0
+offset_top = 215.0
+offset_right = 636.0
+offset_bottom = 255.0
+editor_only = false

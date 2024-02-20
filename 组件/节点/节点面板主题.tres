@@ -1,9 +1,9 @@
 [gd_resource type="Theme" load_steps=6 format=3 uid="uid://bi3qwhycdl2pj"]
 
-[ext_resource type="FontFile" uid="uid://bc7t5l5s1kv1o" path="res://项目配置/得意黑.otf" id="1_bosyh"]
+[ext_resource type="FontFile" uid="uid://bc7t5l5s1kv1o" path="res://项目配置/字体/得意黑.otf" id="1_17unn"]
 
 [sub_resource type="FontVariation" id="FontVariation_xcjj2"]
-base_font = ExtResource("1_bosyh")
+base_font = ExtResource("1_17unn")
 variation_embolden = -0.5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_155a4"]

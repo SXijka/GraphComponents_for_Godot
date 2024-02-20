@@ -16,13 +16,11 @@ class_name 文本节点
 @onready var 文本: RichTextLabel = 节点本体.获取_内容()[0].get_child(0)
 
 
-
-
 func _ready() -> void:
 	节点本体.名称 = 名称
 	节点本体.标记颜色 = 颜色
 	if 内容文件:
-		文本.text = 内容文件
+		文本.text = FileAccess.open(内容文件, FileAccess.READ).get_as_text()
 	else:
 		文本.text = 内容
 	隐藏()
@@ -36,13 +34,12 @@ func 隐藏():
 
 
 func 展现():
-	var 节点边框: 可调整边框 = 节点本体.find_child("可调整边框")
 	show()
-	节点边框.size = 隐藏大小
-	
+	节点本体.节点大小 = 隐藏大小
+
 	var 展开动画 = 文本.create_tween()
 	展开动画.set_trans(Tween.TRANS_CUBIC)
-	展开动画.tween_property(节点边框, "size",Vector2(展开大小.x, 节点本体.size.y) ,展开时间/3)
-	展开动画.tween_property(节点边框, "size", 展开大小, 展开时间 * 2 / 3)
+	展开动画.tween_property(节点本体, "节点大小",Vector2(展开大小.x, 节点本体.size.y) ,展开时间/3)
+	展开动画.tween_property(节点本体, "节点大小", 展开大小, 展开时间 * 2 / 3)
 	展开动画.parallel().tween_property(文本, "visible_ratio", 1.0, 展开时间 * 2 / 3)
 

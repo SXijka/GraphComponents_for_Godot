@@ -29,11 +29,11 @@ func _ready() -> void:
 	_设置(间距)
 	_调整点颜色(点颜色)
 	if 同步容器:
-		同步容器.resized.connect(大小同步)
-		大小同步()
+		同步容器.resized.connect(_大小同步)
+		_大小同步()
 
 
-func 大小同步():
+func _大小同步():
 	var 新大小 = 同步容器.size / scale
 	set_deferred("size", 新大小)
 

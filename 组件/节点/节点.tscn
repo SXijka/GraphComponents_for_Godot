@@ -16,11 +16,13 @@ region = Rect2(352, 96, 64, 64)
 [node name="节点" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = -55.0
+offset_top = -22.5
+offset_right = -55.0
+offset_bottom = -22.5
 size_flags_vertical = 0
 script = ExtResource("1_cg6ec")
-"允许垂直调整" = true
 "节点大小" = Vector2(110, 45)
-"节点全局中心位置" = Vector2(55, 22.5)
 
 [node name="可调整边框" type="MarginContainer" parent="." node_paths=PackedStringArray("本体")]
 layout_mode = 1
@@ -32,6 +34,7 @@ theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 script = ExtResource("1_d88io")
 "本体" = NodePath("节点内容")
+"允许垂直调整" = false
 
 [node name="节点内容" type="VBoxContainer" parent="可调整边框"]
 layout_mode = 2
@@ -62,7 +65,7 @@ size_flags_stretch_ratio = 5.0
 text = "节点"
 vertical_alignment = 1
 
-[node name="隐蔽连接线按钮" type="Button" parent="可调整边框/节点内容/标题栏背景/标题栏边距/左右布局"]
+[node name="隐蔽按钮" type="Button" parent="可调整边框/节点内容/标题栏背景/标题栏边距/左右布局"]
 custom_minimum_size = Vector2(30, 0)
 layout_mode = 2
 size_flags_horizontal = 10
@@ -87,8 +90,8 @@ mouse_filter = 2
 [node name="点背景" parent="可调整边框/节点内容/面板背景/背景容器" node_paths=PackedStringArray("同步容器") instance=ExtResource("2_x8aka")]
 self_modulate = Color(0.2, 0.2, 0.2, 1)
 layout_mode = 1
-offset_right = 0.0
-offset_bottom = 0.0
+offset_right = 500.0
+offset_bottom = 25.0
 scale = Vector2(0.2, 0.2)
 texture = SubResource("AtlasTexture_c5uln")
 "同步容器" = NodePath("..")

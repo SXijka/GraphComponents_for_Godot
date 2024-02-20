@@ -1,49 +1,72 @@
 @tool
 class_name 节点
 extends Control
+## [code]幻华破碎[/code]游戏中的独立元素，是[color=RoyalBlue]游戏中势力、个体、思想或物品的具象化身与代表[/color]，
+## 支持自定义属性设置，如名称、颜色等。[br]
+## [code]节点[/code]是[color=yellow]节点式交互游戏模式[/color]的基础，
+## 允许通过编辑器配置属性，并可自动管理子节点作为内容物。[br]
+## [br]
+## [i]功能关联[/i]: [br]
+## - 与 [接口] 相互作用，通过[接口]管理[code]节点[/code]间的连接逻辑，实现[code]节点[/code]之间的动态交互。[br]
+## - 支持动态背景和标记颜色设置，增强视觉识别。[br]
+## - 提供了垂直调整和自动内容管理的功能，适应不同的布局需求。[br]
 
-
+## 节点的自定义名称，支持通过编辑器设置。
 @export var 名称: String = "节点":
 	set = _设置名称
 
+## 节点标记的颜色，使用预设的皇家蓝色，不包含透明度。
 @export_color_no_alpha var 标记颜色: Color = Color.ROYAL_BLUE:
 	set = _设置标记颜色
 
+## 节点背景的颜色，默认为深灰色。
 @export var 背景颜色: Color = Color(0.15, 0.15, 0.15, 1.0):
 	set = _设置背景颜色
 
+## 节点背景点的颜色，默认为稍亮的灰色。
 @export var 背景点颜色: Color = Color(0.2, 0.2, 0.2, 1.0):
 	set = _设置背景点颜色
 
+## 背景点的图案类型，可选值包括“点”、“叉”、“十”、“一”，默认为“十”。
 @export_enum("点","叉","十","一") var 背景点图案: String = "十":
 	set = _设置背景点图案
 
-@export var 自动获取子节点为内容: bool = false ## 是否自动获取节点实例下的子节点作为内容物加入节点。
+## 是否自动获取节点下的子节点作为内容物加入节点，默认关闭。
+@export var 自动获取子节点为内容: bool = false
 
+## 是否允许垂直调整节点大小，默认关闭。
 @export var 允许垂直调整: bool = false:
 	set = _设置垂直调整
 
-@export var 初始加载内容: Array[Control] = [] ## 在节点就绪时将其中的项加入节点，空值被忽略，各项自动取消隐藏。
+## 节点就绪时自动加载的内容物列表，空值被忽略，内容物自动取消隐藏。
+@export var 初始加载内容: Array[Control] = []
 
-@export var 内容扩展对齐: bool = false ## 在将内容加入节点时设置其为垂直扩展对齐，特别适用于仅有一个内容的节点。
+## 在将内容加入节点时是否设置其为垂直扩展对齐，默认关闭。适用于单个内容的场景。
+@export var 内容扩展对齐: bool = false
 
+## 获取或设置节点的大小。
 @export var 节点大小: Vector2:
 	get = _获取节点大小,
 	set = _设置节点大小
 
+## 获取或设置节点的全局中心位置。
 @export var 节点全局中心位置: Vector2:
 	get = _获取节点全局中心位置,
 	set = _设置节点全局中心位置
 
+## 更改值可隐藏或显示面板内容。
+@export var 隐藏面板: bool = false:
+	set = _设置隐藏面板
 
-@onready var 节点名称: Label = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/节点名称"
-@onready var 底部背景: Panel = $"可调整边框/节点内容/面板背景/底部背景"
-@onready var 标题栏背景: PanelContainer = $"可调整边框/节点内容/标题栏背景"
-@onready var 面板背景: PanelContainer = $"可调整边框/节点内容/面板背景"
-@onready var 背景点: 点背景 = $"可调整边框/节点内容/面板背景/背景容器/点背景"
-@onready var 面板: VBoxContainer = $"可调整边框/节点内容/面板背景/面板容器/面板"
-@onready var 边框: 可调整边框 = $"可调整边框"
-@onready var 隐蔽连接线按钮: Button = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/隐蔽连接线按钮"
+
+@onready var _节点名称: Label = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/节点名称"
+@onready var _底部背景: Panel = $"可调整边框/节点内容/面板背景/底部背景"
+@onready var _标题栏背景: PanelContainer = $"可调整边框/节点内容/标题栏背景"
+@onready var _面板背景: PanelContainer = $"可调整边框/节点内容/面板背景"
+@onready var _背景点: 点背景 = $"可调整边框/节点内容/面板背景/背景容器/点背景"
+@onready var _面板: VBoxContainer = $"可调整边框/节点内容/面板背景/面板容器/面板"
+@onready var _边框: 可调整边框 = $"可调整边框"
+@onready var _隐蔽按钮: Button = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/隐蔽按钮"
 
 
 func _init() -> void:
@@ -57,7 +80,16 @@ func _ready() -> void:
 	_设置背景点图案(背景点图案)
 	_设置背景点颜色(背景点颜色)
 	_设置垂直调整(允许垂直调整)
-	隐蔽连接线按钮.toggled.connect(接口连接线隐蔽)
+	
+	# 左键按钮以隐藏接口连接线
+	_隐蔽按钮.toggled.connect(接口连接线隐蔽)
+	
+	# 右键按钮以隐藏接口内容
+	_隐蔽按钮.gui_input.connect(
+		func(e:InputEvent): 
+			if e is InputEventMouseButton: 
+				if e.button_index == MOUSE_BUTTON_RIGHT and !e.pressed:
+					隐藏面板 = !隐藏面板)
 
 	if not Engine.is_editor_hint():
 		添加_多个内容(初始加载内容)
@@ -66,12 +98,14 @@ func _ready() -> void:
 			添加_多个内容(获取实例子节点())
 
 
+## 添加单个内容物到节点，自动显示。
+## [param 内容物] 要添加的控件。
 func 添加_内容(内容物: Control) -> void: ## 向节点中添加内容物，自动取消隐藏。
 	内容物.show()
 	if 内容物.get_parent():
-		内容物.reparent(面板)
+		内容物.reparent(_面板)
 	else:
-		面板.add_child(内容物)
+		_面板.add_child(内容物)
 	if not 内容扩展对齐:
 		return
 	for 属性 in 内容物.get_property_list():
@@ -79,6 +113,8 @@ func 添加_内容(内容物: Control) -> void: ## 向节点中添加内容物�
 			内容物.set("size_flags_vertical", SIZE_EXPAND_FILL)
 
 
+## 添加多个内容物到节点，自动显示每个内容物。
+## [param 内容物集] 要添加的控件列表。
 func 添加_多个内容(内容物集: Array[Control]) -> void: ## 传入一个列表，将其中所有项均作为内容物加入节点，自动取消隐藏。
 	for 内容物 in 内容物集:
 		if not 内容物:
@@ -86,11 +122,11 @@ func 添加_多个内容(内容物集: Array[Control]) -> void: ## 传入一个�
 
 		elif 内容物.get_parent():
 			内容物.show()
-			内容物.reparent(面板)
+			内容物.reparent(_面板)
 
 		else:
 			内容物.show()
-			面板.add_child(内容物)
+			_面板.add_child(内容物)
 
 		if not 内容扩展对齐:
 			continue
@@ -100,19 +136,27 @@ func 添加_多个内容(内容物集: Array[Control]) -> void: ## 传入一个�
 			内容物.set("size_flags_vertical", SIZE_EXPAND_FILL)
 
 
-func 弹出_内容(内容物: Control) -> Control: ## 将一个内容物移出节点并返回，若返回值为null，则节点不包含该内容物。
+## 从节点移除指定内容物并返回。
+## [param 内容物] 要移除的控件。
+## 移除的控件，如果控件不存在则返回[code]null[/code]。
+func 弹出_内容(内容物: Control) -> Control: ## 将一个内容物移出节点并返回，若返回值为[code]null[/code]，则节点不包含该内容物。
 	if not 存在_内容(内容物):
 		return null
-	面板.remove_child(内容物)
+	_面板.remove_child(内容物)
 	return 内容物
 
 
+## 删除指定的内容物。
+## [param 内容物] 要删除的控件。
 func 删除_内容(内容物: Control) -> void:
 	if not 存在_内容(内容物):
 		return
 	内容物.queue_free()
 
 
+## 从节点移除指定内容物并返回。
+## [param 内容物] 要移除的控件。
+## 移除的控件，如果控件不存在则返回[code]null[/code]。
 func 按索引_删除(索引: int) -> bool:
 	if 索引 >= 获取_内容().size():
 		return false
@@ -121,20 +165,26 @@ func 按索引_删除(索引: int) -> bool:
 		return true
 
 
+## 清空节点中的所有内容物。
 func 清空_内容() -> void:
 	for i in 获取_内容():
 		i.queue_free()
 
 
+## 获取节点中的所有内容物。
+## 节点中所有内容物组成的数组。
 func 获取_内容() -> Array[Control]:
-	if 面板.get_child_count() == 0:
+	if _面板.get_child_count() == 0:
 		return []
 	else:
 		var 内容物集: Array[Control] = []
-		内容物集.append_array(面板.get_children())
+		内容物集.append_array(_面板.get_children())
 		return 内容物集
 
 
+## 检查指定内容物是否存在于节点中。
+## [param 内容物] 要检查的控件。
+## 如果内容物存在则返回[code]true[/code]，否则返回[code]false[/code]。
 func 存在_内容(内容物: Control) -> bool:
 	if not 内容物:
 		return false
@@ -143,82 +193,129 @@ func 存在_内容(内容物: Control) -> bool:
 	return true
 
 
+## 设置接口连接线的显示或隐藏状态。
+## [param 是隐蔽] 指定是否隐藏连接线。
 func 接口连接线隐蔽(是隐蔽: bool):
-	print(是隐蔽)
 	for i in 获取_内容():
 		if i is 接口:
 			i.隐蔽已有连接线 = 是隐蔽
 
 
+## 获取节点下的所有子节点（除了边框节点）。
+## 子节点组成的数组。
 func 获取实例子节点() -> Array[Control]:
 	var 节点集: Array[Control] = []
 	节点集.append_array(get_children())
-	节点集.erase(边框)
+	节点集.erase(_边框)
 	return 节点集
 
 
+## 检查控件是否与节点的边框相交。
+## [param 控件] 要检查的控件。
+## 如果相交则返回[code]true[/code]，否则返回[code]false[/code]。
+func 相交于(控件: Control) -> bool:
+	return 控件.get_global_rect().intersects(_边框.get_global_rect())
+
+
+## 检查控件是否完全被节点的边框包含。
+## [param 控件] 要检查的控件。
+## 如果被包含则返回[code]true[/code]，否则返回[code]false[/code]。
+func 被包含(控件: Control) -> bool:
+	return 控件.get_global_rect().encloses(_边框.get_global_rect())
+
+
+## 检查节点的边框是否完全包含一个控件。
+## [param 控件] 要检查的控件。
+## 如果节点包含控件则返回[code]true[/code]，否则返回[code]false[/code]。
+func 包含(控件: Control) -> bool:
+	return _边框.get_global_rect().encloses(控件.get_global_rect())
+
+
+## 将满足筛选条件的所有[code]节点[/code]集中到给定坐标。[br]
+## 若[param 坐标]保留为[constant @Vector2.INF]，则集中至[color=yellow]鼠标位置[/color]，
+## 若[param 筛选条件]不填，则集中所有[code]节点[/code]。
+static func 所有节点回归至(场景树: SceneTree, 坐标: Vector2 = Vector2.INF, 筛选条件:Callable = func():return true) -> void:
+	var 节点集 := 场景树.get_nodes_in_group("节点").filter(筛选条件)
+	if 节点集.size() == 0:
+		return
+	if 坐标 == Vector2.INF:
+		坐标 = (场景树.get_first_node_in_group("节点") as 节点).get_global_mouse_position()
+	for n:节点 in 节点集:
+		n.节点全局中心位置 = 坐标
+
+
 func _获取节点大小() -> Vector2:
-	return 边框.size
+	return _边框.size
 
 
 func _设置节点大小(新大小: Vector2) -> void:
 	节点大小 = 新大小
-	if not 边框:
+	if not _边框:
 		return
-	边框.size = 新大小
+	_边框.size = 新大小
 
 
 func _获取节点全局中心位置() -> Vector2:
-	return 边框.get_global_rect().get_center()
+	return _边框.get_global_rect().get_center()
 
 
 func _设置节点全局中心位置(新中心: Vector2) -> void:
-	if not 边框:
+	if not _边框:
 		return
-	var 新位置 = position + (新中心 - 边框.get_global_rect().get_center())
+	var 新位置 = position + (新中心 - _边框.get_global_rect().get_center())
 	position = 新位置
+
+
+func _设置隐藏面板(是隐藏: bool):
+	隐藏面板 = 是隐藏
+	if not _面板背景:
+		return
+	if 是隐藏:
+		_面板背景.hide()
+	else:
+		_面板背景.show()
 
 
 func _设置名称(新名称):
 	名称 = 新名称
-	if not 节点名称:
+	if not _节点名称:
 		return
-	节点名称.text = 新名称
+	_节点名称.text = 新名称
 
 
 func _设置标记颜色(新颜色: Color):
 	标记颜色 = 新颜色
-	if not 标题栏背景:
+	if not _标题栏背景:
 		return
-	if not 底部背景:
+	if not _底部背景:
 		return
-	标题栏背景.self_modulate = 新颜色
-	底部背景.modulate = 新颜色
+	_标题栏背景.self_modulate = 新颜色
+	_底部背景.modulate = 新颜色
 
 
 func _设置背景颜色(新颜色: Color):
 	背景颜色 = 新颜色
-	if not 面板背景:
+	if not _面板背景:
 		return
-	面板背景.self_modulate = 新颜色
+	_面板背景.self_modulate = 新颜色
 
 
 func _设置背景点颜色(新颜色: Color):
 	背景点颜色 = 新颜色
-	if not 背景点:
+	if not _背景点:
 		return
-	(背景点 as 点背景).点颜色 = 新颜色
+	(_背景点 as 点背景).点颜色 = 新颜色
 
 
 func _设置背景点图案(新图案: String):
 	背景点图案 = 新图案
-	if not 背景点:
+	if not _背景点:
 		return
-	背景点.图案 = 新图案
+	_背景点.图案 = 新图案
 
 
 func _设置垂直调整(允许: bool):
 	允许垂直调整 = 允许
-	if not 边框:
+	if not _边框:
 		return
-	边框.允许垂直调整 = 允许
+	_边框.允许垂直调整 = 允许
