@@ -27,6 +27,15 @@ extends Control
 
 @export var 内容扩展对齐: bool = false ## 在将内容加入节点时设置其为垂直扩展对齐，特别适用于仅有一个内容的节点。
 
+@export var 节点大小: Vector2:
+	get = _获取节点大小,
+	set = _设置节点大小
+
+@export var 节点全局中心位置: Vector2:
+	get = _获取节点全局中心位置,
+	set = _设置节点全局中心位置
+
+
 @onready var 节点名称: Label = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/节点名称"
 @onready var 底部背景: Panel = $"可调整边框/节点内容/面板背景/底部背景"
 @onready var 标题栏背景: PanelContainer = $"可调整边框/节点内容/标题栏背景"
@@ -146,6 +155,28 @@ func 获取实例子节点() -> Array[Control]:
 	节点集.append_array(get_children())
 	节点集.erase(边框)
 	return 节点集
+
+
+func _获取节点大小() -> Vector2:
+	return 边框.size
+
+
+func _设置节点大小(新大小: Vector2) -> void:
+	节点大小 = 新大小
+	if not 边框:
+		return
+	边框.size = 新大小
+
+
+func _获取节点全局中心位置() -> Vector2:
+	return 边框.get_global_rect().get_center()
+
+
+func _设置节点全局中心位置(新中心: Vector2) -> void:
+	if not 边框:
+		return
+	var 新位置 = position + (新中心 - 边框.get_global_rect().get_center())
+	position = 新位置
 
 
 func _设置名称(新名称):

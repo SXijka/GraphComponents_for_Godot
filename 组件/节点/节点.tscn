@@ -19,6 +19,8 @@ anchors_preset = 0
 size_flags_vertical = 0
 script = ExtResource("1_cg6ec")
 "允许垂直调整" = true
+"节点大小" = Vector2(110, 45)
+"节点全局中心位置" = Vector2(55, 22.5)
 
 [node name="可调整边框" type="MarginContainer" parent="." node_paths=PackedStringArray("本体")]
 layout_mode = 1
@@ -85,8 +87,8 @@ mouse_filter = 2
 [node name="点背景" parent="可调整边框/节点内容/面板背景/背景容器" node_paths=PackedStringArray("同步容器") instance=ExtResource("2_x8aka")]
 self_modulate = Color(0.2, 0.2, 0.2, 1)
 layout_mode = 1
-offset_right = 500.0
-offset_bottom = 25.0
+offset_right = 0.0
+offset_bottom = 0.0
 scale = Vector2(0.2, 0.2)
 texture = SubResource("AtlasTexture_c5uln")
 "同步容器" = NodePath("..")
