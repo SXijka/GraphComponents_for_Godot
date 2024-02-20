@@ -19,13 +19,13 @@ grow_vertical = 2
 script = ExtResource("1_7fo7b")
 
 [node name="节点" parent="." instance=ExtResource("1_1u3x3")]
+layout_mode = 1
 offset_left = 224.0
 offset_top = 162.0
 offset_right = 224.0
 offset_bottom = 162.0
 "自动获取子节点为内容" = true
-"节点全局中心位置" = Vector2(283, 182.5)
-"隐藏面板" = false
+"节点全局中心位置" = Vector2(804, 484)
 
 [node name="接口" parent="节点" instance=ExtResource("2_uueta")]
 visible = false
@@ -60,13 +60,13 @@ grow_vertical = 1
 "隐蔽已有连接线" = true
 
 [node name="节点2" parent="." instance=ExtResource("1_1u3x3")]
-offset_left = 711.0
-offset_top = 150.0
-offset_right = 711.0
-offset_bottom = 150.0
+layout_mode = 1
+offset_left = -313.0
+offset_top = -49.0
+offset_right = -313.0
+offset_bottom = -49.0
 "自动获取子节点为内容" = true
-"节点全局中心位置" = Vector2(770, 170.5)
-"隐藏面板" = false
+"节点全局中心位置" = Vector2(267, 273)
 
 [node name="接口5" parent="节点2" instance=ExtResource("2_uueta")]
 visible = false
@@ -170,4 +170,8 @@ grow_vertical = 1
 "隐蔽已有连接线" = true
 
 [node name="文本节点" parent="." instance=ExtResource("4_euqlp")]
+offset_left = 179.0
+offset_top = 158.0
+offset_right = 179.0
+offset_bottom = 158.0
 "内容" = "[center]Alfrado"

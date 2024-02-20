@@ -1,9 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://c1rnxntsvafo5"]
+[gd_scene load_steps=9 format=3 uid="uid://c1rnxntsvafo5"]
 
 [ext_resource type="PackedScene" uid="uid://bfvnosgijqsuw" path="res://组件/点背景/点背景.tscn" id="1_o68i0"]
+[ext_resource type="Script" path="res://组件/节点盘/节点盘.gd" id="1_s3nx3"]
+[ext_resource type="PackedScene" uid="uid://b33422l71soj3" path="res://组件/窗口缩放/窗口缩放.tscn" id="2_12hcr"]
+[ext_resource type="PackedScene" uid="uid://caob8hi30yccc" path="res://组件/可调整边框/可调整边框.tscn" id="2_hjqtx"]
 [ext_resource type="Texture2D" uid="uid://5n1qnlesu0si" path="res://组件/点背景/背景图标.svg" id="2_hn1ih"]
+[ext_resource type="PackedScene" uid="uid://catrgda1jghjb" path="res://组件/节点/节点.tscn" id="6_7sogn"]
+[ext_resource type="PackedScene" uid="uid://cjmqfgvlymvaa" path="res://组件/接口/接口.tscn" id="7_xp10o"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_pqt87"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqsbr"]
 resource_local_to_scene = true
 atlas = ExtResource("2_hn1ih")
 region = Rect2(352, 352, 64, 64)
@@ -15,21 +20,268 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_s3nx3")
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-scroll_offset = Vector2(10, 0)
-scroll_limit_end = Vector2(0.81, 1.78)
-scroll_ignore_camera_zoom = true
+[node name="窗口缩放" parent="." instance=ExtResource("2_12hcr")]
+layout_mode = 1
+"最小缩放倍数" = 0.5
 
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+[node name="可调整边框" parent="." node_paths=PackedStringArray("本体") instance=ExtResource("2_hjqtx")]
+layout_mode = 1
+offset_left = -50005.0
+offset_top = -50005.0
+offset_right = 50005.0
+offset_bottom = 50005.0
+"本体" = NodePath("背景盘")
+"允许调整" = false
+"允许垂直调整" = false
 
-[node name="点背景" parent="ParallaxBackground/ParallaxLayer" instance=ExtResource("1_o68i0")]
+[node name="背景盘" type="Panel" parent="可调整边框"]
+custom_minimum_size = Vector2(100000, 100000)
+layout_mode = 2
+
+[node name="点背景" parent="可调整边框/背景盘" node_paths=PackedStringArray("同步容器") instance=ExtResource("1_o68i0")]
 self_modulate = Color(0.745098, 0.745098, 0.745098, 1)
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 500.0
-offset_bottom = 600.0
+offset_right = 0.0
+offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = SubResource("AtlasTexture_pqt87")
+scale = Vector2(0.305, 0.305)
+texture = SubResource("AtlasTexture_eqsbr")
+"同步容器" = NodePath("..")
+
+[node name="盘边距" type="MarginContainer" parent="可调整边框/背景盘"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 2000
+theme_override_constants/margin_top = 2000
+theme_override_constants/margin_right = 2000
+theme_override_constants/margin_bottom = 2000
+
+[node name="盘边缘" type="ReferenceRect" parent="可调整边框/背景盘/盘边距"]
+layout_mode = 2
+mouse_filter = 1
+border_color = Color(1, 0.317647, 0, 0.392157)
+border_width = 20.0
+editor_only = false
+
+[node name="Control" type="Control" parent="可调整边框/背景盘/盘边距/盘边缘"]
+layout_mode = 1
+anchors_preset = 0
+mouse_filter = 1
+
+[node name="节点" parent="可调整边框/背景盘/盘边距/盘边缘/Control" instance=ExtResource("6_7sogn")]
+layout_mode = 1
+offset_left = 47963.0
+offset_top = 48016.0
+offset_right = 47963.0
+offset_bottom = 48016.0
+"自动获取子节点为内容" = true
+"节点全局中心位置" = Vector2(539, 340)
+
+[node name="接口" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口2" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口3" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口4" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口5" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口6" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口7" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口8" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口9" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口10" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点" instance=ExtResource("7_xp10o")]
+layout_mode = 1
+offset_left = -22.0
+offset_top = -46.0
+offset_right = 78.0
+offset_bottom = -16.0
+
+[node name="节点2" parent="可调整边框/背景盘/盘边距/盘边缘/Control" instance=ExtResource("6_7sogn")]
+layout_mode = 1
+offset_left = 47963.0
+offset_top = 48016.0
+offset_right = 47963.0
+offset_bottom = 48016.0
+"自动获取子节点为内容" = true
+"节点全局中心位置" = Vector2(539, 340)
+
+[node name="接口" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口2" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口3" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口4" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口5" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口6" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口7" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口8" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口9" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口10" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点2" instance=ExtResource("7_xp10o")]
+layout_mode = 1
+offset_left = -22.0
+offset_top = -46.0
+offset_right = 78.0
+offset_bottom = -16.0
+
+[node name="节点3" parent="可调整边框/背景盘/盘边距/盘边缘/Control" instance=ExtResource("6_7sogn")]
+layout_mode = 1
+offset_left = 47963.0
+offset_top = 48016.0
+offset_right = 47963.0
+offset_bottom = 48016.0
+"自动获取子节点为内容" = true
+"节点全局中心位置" = Vector2(539, 340)
+
+[node name="接口" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口2" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口3" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口4" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口5" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口6" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口7" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口8" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口9" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口10" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点3" instance=ExtResource("7_xp10o")]
+layout_mode = 1
+offset_left = -22.0
+offset_top = -46.0
+offset_right = 78.0
+offset_bottom = -16.0
+
+[node name="节点4" parent="可调整边框/背景盘/盘边距/盘边缘/Control" instance=ExtResource("6_7sogn")]
+layout_mode = 1
+offset_left = 47963.0
+offset_top = 48016.0
+offset_right = 47963.0
+offset_bottom = 48016.0
+"自动获取子节点为内容" = true
+"节点全局中心位置" = Vector2(539, 340)
+
+[node name="接口" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口2" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口3" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口4" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口5" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口6" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口7" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口8" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口9" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 0
+anchors_preset = 0
+
+[node name="接口10" parent="可调整边框/背景盘/盘边距/盘边缘/Control/节点4" instance=ExtResource("7_xp10o")]
+layout_mode = 1
+offset_left = -22.0
+offset_top = -46.0
+offset_right = 78.0
+offset_bottom = -16.0

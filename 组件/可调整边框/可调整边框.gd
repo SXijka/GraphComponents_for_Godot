@@ -147,6 +147,7 @@ func _获取鼠标方向(事件: InputEvent):
 func _进行拖动(事件: InputEvent):
 	if not 允许拖动:
 		本体.mouse_default_cursor_shape = Control.CURSOR_ARROW
+		正在_拖动 = false
 		return
 	if 正在_调整:
 		正在_拖动 = false

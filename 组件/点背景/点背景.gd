@@ -35,7 +35,9 @@ func _ready() -> void:
 
 func _大小同步():
 	var 新大小 = 同步容器.size / scale
+	set_anchors_preset(Control.PRESET_CENTER)
 	set_deferred("size", 新大小)
+	set_anchors_preset.call_deferred(Control.PRESET_FULL_RECT)
 
 
 func _配置点完整(是_完整的: bool):

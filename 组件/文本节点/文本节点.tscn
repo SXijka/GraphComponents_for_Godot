@@ -10,10 +10,17 @@ script = ExtResource("1_xxgr6")
 
 [node name="节点" parent="." node_paths=PackedStringArray("初始加载内容") instance=ExtResource("1_yt112")]
 layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 "允许垂直调整" = true
 "初始加载内容" = [NodePath("滚动框")]
 "内容扩展对齐" = true
-"隐藏面板" = false
+"节点全局中心位置" = Vector2(0, 0)
 
 [node name="滚动框" type="ScrollContainer" parent="节点"]
 custom_minimum_size = Vector2(100, 30)
