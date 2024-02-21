@@ -27,12 +27,14 @@ window/stretch/aspect="expand"
 
 folder_colors={
 "res://组件/": "green",
+"res://组件/区域/": "pink",
 "res://组件/可调整边框/": "pink",
 "res://组件/接口/": "pink",
 "res://组件/文本节点/": "pink",
 "res://组件/点背景/": "pink",
 "res://组件/窗口缩放/": "pink",
 "res://组件/节点/": "pink",
+"res://组件/节点盘/": "pink",
 "res://组件/连接代理/": "pink",
 "res://项目配置/": "yellow"
 }

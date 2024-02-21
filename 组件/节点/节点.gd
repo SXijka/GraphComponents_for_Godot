@@ -11,6 +11,7 @@ extends Control
 ## - 支持动态背景和标记颜色设置，增强视觉识别。[br]
 ## - 提供了垂直调整和自动内容管理的功能，适应不同的布局需求。[br]
 
+@export_subgroup("节点外观")
 ## 节点的自定义名称，支持通过编辑器设置。
 @export var 名称: String = "节点":
 	set = _设置名称
@@ -31,32 +32,51 @@ extends Control
 @export_enum("点","叉","十","一") var 背景点图案: String = "十":
 	set = _设置背景点图案
 
+## 更改值可隐藏或显示面板内容。
+@export var 隐藏面板: bool = false:
+	set = _设置隐藏面板
+
+## 更改值可使节点整体半透明。
+@export var 半透明节点: bool = false:
+	set = _设置半透明节点
+
+@export_subgroup("节点行为")
+## 节点就绪时自动加载至面板的内容物列表，[code]null[/code]被忽略，内容物自动[color=yellow]取消隐藏[/color]。
+@export var 初始加载内容: Array[Control] = []
+
 ## 是否自动获取节点下的子节点作为内容物加入节点，默认关闭。
 @export var 自动获取子节点为内容: bool = false
 
-## 是否允许垂直调整节点大小，默认关闭。
+## 是否允许垂直调整节点垂直大小，默认关闭，可为专门用于展示的节点，如[文本节点]打开。
 @export var 允许垂直调整: bool = false:
 	set = _设置垂直调整
 
-## 节点就绪时自动加载的内容物列表，空值被忽略，内容物自动取消隐藏。
-@export var 初始加载内容: Array[Control] = []
+## 是否允许拖动节点大小，默认开启，可为不可移动的用于设定、叙事的节点关闭。
+@export var 允许拖动: bool = true:
+	set = _设置拖动
+
+## 是否允许调整节点大小，默认打开，若关闭则[param 是否允许垂直调整]无意义。
+@export var 允许调整: bool = true:
+	set = _设置调整
 
 ## 在将内容加入节点时是否设置其为垂直扩展对齐，默认关闭。适用于单个内容的场景。
 @export var 内容扩展对齐: bool = false
 
-## 获取或设置节点的大小。
-@export var 节点大小: Vector2:
+@export_subgroup("节点信息")
+## 获取或设置节点的非全局大小。若要获取全局大小，使用[code]节点全局矩形.size[/code]
+@export var 节点大小: Vector2 = Vector2(110, 45):
 	get = _获取节点大小,
 	set = _设置节点大小
+
+## 获取或设置节点的全局矩形。
+@export var 节点全局矩形: Rect2:
+	get = _获取节点全局矩形,
+	set = _设置节点全局矩形
 
 ## 获取或设置节点的全局中心位置。
 @export var 节点全局中心位置: Vector2:
 	get = _获取节点全局中心位置,
 	set = _设置节点全局中心位置
-
-## 更改值可隐藏或显示面板内容。
-@export var 隐藏面板: bool = false:
-	set = _设置隐藏面板
 
 
 @onready var _节点名称: Label = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/节点名称"
@@ -67,6 +87,10 @@ extends Control
 @onready var _面板: VBoxContainer = $"可调整边框/节点内容/面板背景/面板容器/面板"
 @onready var _边框: 可调整边框 = $"可调整边框"
 @onready var _隐蔽按钮: Button = $"可调整边框/节点内容/标题栏背景/标题栏边距/左右布局/隐蔽按钮"
+
+signal 隐蔽键左击
+signal 隐蔽键中击
+signal 隐蔽键右击
 
 
 func _init() -> void:
@@ -80,16 +104,22 @@ func _ready() -> void:
 	_设置背景点图案(背景点图案)
 	_设置背景点颜色(背景点颜色)
 	_设置垂直调整(允许垂直调整)
-	
+
+	# 右键按钮以隐藏面板
+	# 中键按钮以使面板半透明
 	# 左键按钮以隐藏接口连接线
-	_隐蔽按钮.toggled.connect(接口连接线隐蔽)
-	
-	# 右键按钮以隐藏接口内容
 	_隐蔽按钮.gui_input.connect(
 		func(e:InputEvent): 
 			if e is InputEventMouseButton: 
 				if e.button_index == MOUSE_BUTTON_RIGHT and !e.pressed:
-					隐藏面板 = !隐藏面板)
+					隐藏面板 = !隐藏面板
+					emit_signal("隐蔽键右击")
+				elif e.button_index == MOUSE_BUTTON_MIDDLE and !e.pressed:
+					半透明节点 = !半透明节点
+					emit_signal("隐蔽键中击")
+				elif e.button_index == MOUSE_BUTTON_LEFT and !e.pressed:
+					emit_signal("隐蔽键左击"))
+	_隐蔽按钮.toggled.connect(接口连接线隐蔽)
 
 	if not Engine.is_editor_hint():
 		添加_多个内容(初始加载内容)
@@ -195,7 +225,7 @@ func 存在_内容(内容物: Control) -> bool:
 
 ## 设置接口连接线的显示或隐藏状态。
 ## [param 是隐蔽] 指定是否隐藏连接线。
-func 接口连接线隐蔽(是隐蔽: bool):
+func 接口连接线隐蔽(是隐蔽: bool) -> void:
 	for i in 获取_内容():
 		if i is 接口:
 			i.隐蔽已有连接线 = 是隐蔽
@@ -231,6 +261,16 @@ func 包含(控件: Control) -> bool:
 	return _边框.get_global_rect().encloses(控件.get_global_rect())
 
 
+## 更改该节点隐蔽按钮工具提示文本。
+func 按钮提示(提示: String) -> void:
+	_隐蔽按钮.tooltip_text = 提示
+
+
+## 更改该节点标题栏工具提示文本。
+func 标题栏提示(提示: String) -> void:
+	_标题栏背景.tooltip_text = 提示
+
+
 ## 将满足筛选条件的所有[code]节点[/code]集中到给定坐标。[br]
 ## 若[param 坐标]保留为[constant @Vector2.INF]，则集中至[color=yellow]鼠标位置[/color]，
 ## 若[param 筛选条件]不填，则集中所有[code]节点[/code]。
@@ -255,11 +295,24 @@ func _设置节点大小(新大小: Vector2) -> void:
 	_边框.size = 新大小
 
 
+func _获取节点全局矩形() -> Rect2:
+	return _边框.get_global_rect()
+
+
+func _设置节点全局矩形(新矩形: Rect2) -> void:
+	节点全局矩形 = 新矩形
+	if not _边框:
+		return
+	_边框.size = 新矩形.size * (_边框.size / _边框.get_global_rect().size)
+	_设置节点全局中心位置(新矩形.get_center())
+
+
 func _获取节点全局中心位置() -> Vector2:
 	return _边框.get_global_rect().get_center()
 
 
 func _设置节点全局中心位置(新中心: Vector2) -> void:
+	节点全局中心位置 = 新中心
 	if not _边框:
 		return
 	var 新位置 = position + (新中心 - _边框.get_global_rect().get_center())
@@ -319,3 +372,26 @@ func _设置垂直调整(允许: bool):
 	if not _边框:
 		return
 	_边框.允许垂直调整 = 允许
+
+
+func _设置调整(允许: bool):
+	允许调整 = 允许
+	if not _边框:
+		return
+	_边框.允许调整 = 允许
+
+
+func _设置拖动(允许: bool):
+	允许拖动 = 允许
+	if not _边框:
+		return
+	_边框.允许拖动 = 允许
+
+
+func _设置半透明节点(是半透明: bool):
+	半透明节点 = 是半透明
+	if 是半透明:
+		modulate.a = 0.5
+	else:
+		modulate.a = 1.0
+
