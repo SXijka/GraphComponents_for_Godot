@@ -40,6 +40,7 @@ theme = ExtResource("3_5rugr")
 custom_minimum_size = Vector2(20, 0)
 layout_mode = 2
 size_flags_horizontal = 8
+tooltip_text = "连接 / 断开 / 连接线效果"
 action_mode = 0
 icon = ExtResource("3_bbakn")
 flat = true
