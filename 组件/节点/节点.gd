@@ -1,7 +1,7 @@
 @tool
 class_name 节点
 extends Control
-## [code]幻华破碎[/code]游戏中的独立元素，是[color=RoyalBlue]游戏中势力、个体、思想或物品的具象化身与代表[/color]，
+## [code]幻华破碎[/code]游戏中的独立元素，是[color=RoyalBlue]游戏中势力、个体、思想、行为或物品的具象化身与代表[/color]，
 ## 支持自定义属性设置，如名称、颜色等。[br]
 ## [code]节点[/code]是[color=yellow]节点式交互游戏模式[/color]的基础，
 ## 允许通过编辑器配置属性，并可自动管理子节点作为内容物。[br]
@@ -68,7 +68,7 @@ extends Control
 	get = _获取节点大小,
 	set = _设置节点大小
 
-## 获取或设置节点的全局矩形。
+## 获取或设置节点的全局矩形（global_rect）。
 @export var 节点全局矩形: Rect2:
 	get = _获取节点全局矩形,
 	set = _设置节点全局矩形
@@ -270,6 +270,16 @@ func 按钮提示(提示: String) -> void:
 ## 更改该节点标题栏工具提示文本。
 func 标题栏提示(提示: String) -> void:
 	_标题栏背景.tooltip_text = 提示
+
+
+## 节点的隐藏方式。
+func 隐藏():
+	hide()
+
+
+## 节点的展现方式。
+func 展现():
+	show()
 
 
 ## 将满足筛选条件的所有[code]节点[/code]集中到给定坐标。[br]

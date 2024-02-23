@@ -34,12 +34,13 @@ func _ready() -> void:
 
 
 func 隐藏():
-	hide()
+	super.隐藏()
 	文本.visible_ratio = 0
 
 
+## 节点的展现方式：会根据[param 展开时间]播放一个动画，徐徐展开文本节点至[param 展开大小]。
 func 展现():
-	show()
+	super.展现()
 	节点大小 = 隐藏大小
 
 	var 展开动画 = 文本.create_tween()

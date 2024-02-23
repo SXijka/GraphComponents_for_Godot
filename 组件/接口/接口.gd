@@ -17,13 +17,21 @@ const 隐蔽连接线暗度: float = 0.5 ## 若对连接线实行隐蔽，则其
 @export var 接口名称: String = "接口": ## 更改该名称会同步对应到UI的名称显示上。
 	set = _设置接口名称
 
-@export var 所属节点: Control ## 该接口所属的[节点]，由于当前版本无法指定派生类，请仅指定为[节点]。
-
 @export_enum("发送模式", "接收模式") var 接口模式: String = "发送模式": ## 该接口用于发送多个连接，还是接收单个连接。
 	set = _设置接口模式
 
 @export_color_no_alpha var 接点颜色: Color = Color.WHITE: ## 接点和接口名称下方渐变背景的颜色。
 	set = _设置接点颜色
+
+@export var 所属节点: 节点 ## 该接口所属于的[节点]实例，每个接口都应该有且只有一个，通常为其父级。
+
+## 从自身出发向父级查找，将第一个找到的类型为[节点]或[节点]的派生类的父节点作为[param 所属节点]。[br]
+## 若已指定[param 所属节点]，则对该项的设置不会有任何效果。
+@export var 自动获取所属节点: bool = true
+
+## 若[param 自动获取所属节点]为[code]true[/code]，向上查找的层级数。
+## 若为[code]0[/code]，而[param 自动获取所属节点]为[code]true[/code]，则会一直尝试，直到根节点位置。
+@export_range(0, 15, 1, "or_greater") var 获取所属节点尝试层级: int = 8
 
 @export_subgroup("接收模式属性")
 ## 仅接收者可以拥有配置文件。
@@ -72,6 +80,8 @@ func _init() -> void:
 
 
 func _ready():
+	_获取父节点为所属节点()
+
 	_设置接口名称(接口名称)
 	_设置接口模式(接口模式)
 	_设置接点颜色(接点颜色)
@@ -140,6 +150,25 @@ func 背景提示(提示: String) -> void:
 ## 更改该接口接点工具提示文本。
 func 接点提示(提示: String) -> void:
 	_接点.tooltip_text = 提示
+
+
+func _获取父节点为所属节点() -> void:
+	if 所属节点 != null:
+		return
+	var 其父节点 = get_parent()
+	if 获取所属节点尝试层级 > 0:
+		for i in range(获取所属节点尝试层级):
+			if 其父节点 == null or 其父节点 is 节点:
+				break
+			其父节点 = 其父节点.get_parent()
+	else :
+		while 其父节点 != null:
+			if 其父节点 is 节点:
+				break
+			其父节点 = 其父节点.get_parent()
+
+	if 其父节点 is 节点:
+		所属节点 = 其父节点
 
 
 func _检测鼠标是否在当前接口() -> void:
