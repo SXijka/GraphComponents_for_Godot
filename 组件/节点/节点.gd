@@ -91,13 +91,14 @@ extends Control
 signal 隐蔽键左击
 signal 隐蔽键中击
 signal 隐蔽键右击
-
+signal 大小变化
 
 func _init() -> void:
 	add_to_group("节点")
 
 
 func _ready() -> void:
+	_边框.item_rect_changed.connect(func():emit_signal("大小变化"))
 	_设置名称(名称)
 	_设置标记颜色(标记颜色)
 	_设置背景颜色(背景颜色)
