@@ -17,7 +17,7 @@ const 隐蔽连接线暗度: float = 0.5 ## 若对连接线实行隐蔽，则其
 @export var 接口名称: String = "接口": ## 更改该名称会同步对应到UI的名称显示上。
 	set = _设置接口名称
 
-@export var 所属节点: 节点 ## 该接口所属的节点，出于可扩展性的考虑，需要手动指定。
+@export var 所属节点: Control ## 该接口所属的[节点]，由于当前版本无法指定派生类，请仅指定为[节点]。
 
 @export_enum("发送模式", "接收模式") var 接口模式: String = "发送模式": ## 该接口用于发送多个连接，还是接收单个连接。
 	set = _设置接口模式
@@ -37,6 +37,8 @@ const 隐蔽连接线暗度: float = 0.5 ## 若对连接线实行隐蔽，则其
 	set = _设置配置文件
 
 @export var 允许断开: bool = true ## 是否允许接收者断开。仅接收模式有效。
+
+@export var 将自动连接至: Array[接口] = [] ## 在游戏开始时该接口会自动连接至的接口。
 
 @export_subgroup("发送模式属性")
 @export var 允许连接同一节点接口: bool = false ## 若为[code]true[/code]，则该接口可以连接至自身所属节点的接口，这可能会导致循环。仅发送模式有效。
@@ -73,7 +75,11 @@ func _ready():
 	_设置接口名称(接口名称)
 	_设置接口模式(接口模式)
 	_设置接点颜色(接点颜色)
+
+	if 所属节点:
+		所属节点.大小变化.connect(func():_绘画.queue_redraw())
 	_接点.pressed.connect(_当接点按下)
+
 	if 接口模式 == "发送模式":
 		_绘画.draw.connect(_绘制连接线)
 		_接点.gui_input.connect(func(事件:InputEvent):
@@ -85,6 +91,12 @@ func _ready():
 				使用直线绘制连接线 = !使用直线绘制连接线
 			if 事件.button_index == MOUSE_BUTTON_MASK_RIGHT:
 				隐蔽已有连接线 = !隐蔽已有连接线)
+
+		for i:接口 in 将自动连接至:
+			if i == null:
+				continue
+			if i.接口模式 == "接收模式":
+				代理.连接到(i.代理, false)
 
 	elif 接口模式 == "接收模式":
 		_接点.button_mask = MOUSE_BUTTON_MASK_RIGHT
