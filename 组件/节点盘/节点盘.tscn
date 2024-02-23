@@ -60,6 +60,8 @@ theme_override_constants/margin_right = 2000
 theme_override_constants/margin_bottom = 2000
 
 [node name="盘边缘" type="ReferenceRect" parent="可调整边框/背景盘/盘边距"]
+z_index = 4
+z_as_relative = false
 layout_mode = 2
 mouse_filter = 1
 border_color = Color(1, 0.317647, 0, 0.392157)
@@ -67,6 +69,8 @@ border_width = 20.0
 editor_only = false
 
 [node name="盘面" type="Control" parent="可调整边框/背景盘/盘边距/盘边缘"]
+z_index = 2
+z_as_relative = false
 layout_mode = 1
 anchors_preset = 0
 mouse_filter = 1
