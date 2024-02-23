@@ -14,14 +14,12 @@ var _哈希值: int = hash(self)
 
 
 func _enter_tree() -> void:
+	add_to_group("区域")
 	_当_添加()
 
 
 func _ready() -> void:
 	connect("item_rect_changed", _当_移动)
-	print(get_global_rect())
-	await get_tree().process_frame
-	print(get_global_rect())
 
 
 func _input(_event: InputEvent) -> void:

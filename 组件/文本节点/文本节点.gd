@@ -16,6 +16,10 @@ class_name 文本节点
 @onready var 文本: RichTextLabel = 节点本体.获取_内容()[0].get_child(0)
 
 
+func _init() -> void:
+	add_to_group("文本节点")
+
+
 func _ready() -> void:
 	节点本体.名称 = 名称
 	节点本体.标记颜色 = 颜色
