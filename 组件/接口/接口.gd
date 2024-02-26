@@ -34,14 +34,9 @@ const 隐蔽连接线暗度: float = 0.5 ## 若对连接线实行隐蔽，则其
 @export_range(0, 15, 1, "or_greater") var 获取所属节点尝试层级: int = 8
 
 @export_subgroup("接收模式属性")
-## 仅接收者可以拥有配置文件。
+## 仅接收者可以拥有配置文件。类型必须为[连接配置]或其派生类。[br]
 ## 若接收者未指定配置文件，则当发送者调用[method 连接配置.连接判断]时，直接得到[code]true[/code]，也就是允许建立连接。[br]
-## 该变量的配置方法: [br]
-## 1、创建一个继承自[连接配置]的命名派生类。[br]
-## 2、添加子节点，选择[连接配置]的派生类，点击添加，即可得到一个该类的[Node]形式的实例。[br]
-## 3、将创建的[Node]拖动到[接口]检查器的该变量处。[br]
-## 注意，每个连接配置节点实例仅可挂载在一个接口上。
-@export var 配置文件: 连接配置:
+@export_file() var 配置文件: String:
 	set = _设置配置文件
 
 @export var 允许断开: bool = true ## 是否允许接收者断开。仅接收模式有效。
@@ -74,6 +69,8 @@ var 连接中: bool = false ## 是否正尝试连接，此间绘制接点至鼠�
 
 var 代理: 连接代理 = 连接代理.new(self) ## 用于管理接口连接功能。
 
+var 配置: 连接配置
+
 
 func _init() -> void:
 	add_to_group("接口")
@@ -82,6 +79,7 @@ func _init() -> void:
 func _ready():
 	_获取父节点为所属节点()
 
+	_设置配置文件(配置文件)
 	_设置接口名称(接口名称)
 	_设置接口模式(接口模式)
 	_设置接点颜色(接点颜色)
@@ -116,11 +114,11 @@ func _ready():
 func _process(delta: float) -> void:
 	if 接口模式 != "接收模式":
 		return
-	if not 配置文件:
+	if not 配置:
 		return
 	if 代理.发送者 == null:
 		return
-	配置文件.连接时不断执行(delta)
+	配置.连接时不断执行(delta)
 
 
 func _input(事件: InputEvent) -> void:
@@ -138,8 +136,8 @@ func _input(事件: InputEvent) -> void:
 		if not 事件.pressed:
 			if _检测连接():
 				代理.连接到(当前鼠标所在接口.代理, false)
-				if 当前鼠标所在接口.配置文件:
-					当前鼠标所在接口.配置文件.在连接成功时执行()
+				if 当前鼠标所在接口.配置:
+					当前鼠标所在接口.配置.在连接成功时执行()
 
 
 ## 更改该接口背景工具提示文本。
@@ -217,11 +215,14 @@ func _设置接点颜色(新颜色: Color):
 	_渐变背景.border_color = Color(新颜色, 0.5)
 
 
-func _设置配置文件(新配置: 连接配置):
-	配置文件 = 新配置
-	if not 新配置:
+func _设置配置文件(新文件: String):
+	if not 新文件 or 新文件.is_empty():
 		return
-	新配置.所属接口 = self
+	var 新配置 = load(新文件).new() as 连接配置
+	if 新配置:
+		配置文件 = 新文件
+		配置 = 新配置
+		配置.所属接口 = self
 
 
 func _当接点按下():
@@ -230,8 +231,8 @@ func _当接点按下():
 			return
 		if 代理 and 代理.发送者:
 			代理.断开于(代理.发送者)
-			if 配置文件:
-				配置文件.断开时执行一次()
+			if 配置:
+				配置.断开时执行一次()
 		return
 	if 接口模式 == "发送模式":
 		连接中 = true
@@ -257,16 +258,16 @@ func _检测连接() -> bool:
 			return false
 		if not 替代断开:
 			return false
-		if (not 当前鼠标所在接口.配置文件) or 当前鼠标所在接口.配置文件.连接判断(self):
+		if (not 当前鼠标所在接口.配置) or 当前鼠标所在接口.配置.连接判断(self):
 			当前鼠标所在接口.代理.断开于(当前鼠标所在接口.代理.发送者)
-			if 当前鼠标所在接口.配置文件:
-				当前鼠标所在接口.配置文件.断开时执行一次()
+			if 当前鼠标所在接口.配置:
+				当前鼠标所在接口.配置.断开时执行一次()
 			return true
 		return false
 
-	if not 当前鼠标所在接口.配置文件:
+	if not 当前鼠标所在接口.配置:
 		return true
-	return 当前鼠标所在接口.配置文件.连接判断(self)
+	return 当前鼠标所在接口.配置.连接判断(self)
 
 
 func _绘制连接线():

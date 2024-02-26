@@ -241,6 +241,11 @@ func 获取实例子节点() -> Array[Control]:
 	return 节点集
 
 
+## 返回该节点唯一的[可调整边框]，边框负责节点的调整和拖动。
+func 获取_边框() -> 可调整边框:
+	return _边框
+
+
 ## 检查控件是否与节点的边框相交。
 ## [param 控件] 要检查的控件。
 ## 如果相交则返回[code]true[/code]，否则返回[code]false[/code]。

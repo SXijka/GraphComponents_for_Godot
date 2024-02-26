@@ -18,13 +18,17 @@ extends MarginContainer
 
 @export var 允许拖动: bool = true ## 若为false，则无法进行拖动。
 
+@export var 区域反应表: Dictionary = {} ## [code]键[/code]为区域名称，[code]值[/code]为相交时所调用的无参数[Callable]。
+
 var 正在_调整: bool = false ## 是否正在调整。不可与拖动同时为true，请只读。
-
 var 正在_拖动: bool = false ## 是否正在调整。不可与拖动同时为true，请只读。
-
 
 var _最近方向: String = ""
 var _拖动量: Vector2 = Vector2.ZERO
+
+
+signal 调整 ## 在边框进行调整后立刻发出。
+signal 拖动 ## 在边框进行拖动后立刻发出。
 
 
 func _ready() -> void:
@@ -67,6 +71,7 @@ func _进行调整(方向: String, 相对运动: Vector2):
 	# 若不允许垂直调整，则直接返回，不进行垂直方向的调整
 	if not 允许垂直调整 and (方向 == "上" or 方向 == "下" or 方向.contains("上") or 方向.contains("下")):
 		return 
+
 	match 方向:
 		"上":
 			新尺寸.y -= 相对运动.y
@@ -94,11 +99,13 @@ func _进行调整(方向: String, 相对运动: Vector2):
 
 	size = 新尺寸
 	global_position = 新位置
+	emit_signal("调整")
 
 
 func _获取鼠标方向(事件: InputEvent):
 	if not 允许调整:
 		return
+
 	var 鼠标 = 本体.get_local_mouse_position()
 	var 容器尺寸 = 本体.size
 	var 方向:String = ""
@@ -153,6 +160,7 @@ func _进行拖动(事件: InputEvent):
 		正在_拖动 = false
 		本体.mouse_default_cursor_shape = Control.CURSOR_ARROW
 		return
+
 	if 事件 is InputEventMouseButton:
 		if 事件.button_index == MOUSE_BUTTON_LEFT and 事件.pressed:
 			_拖动量 = 本体.global_position - 本体.get_global_mouse_position()
@@ -161,8 +169,11 @@ func _进行拖动(事件: InputEvent):
 		elif 事件.button_index == MOUSE_BUTTON_LEFT and not 事件.pressed:
 			正在_拖动 = false
 			本体.mouse_default_cursor_shape = Control.CURSOR_ARROW
+
 	elif 事件 is InputEventMouseMotion and 正在_拖动:
 		global_position = get_global_mouse_position() + _拖动量
+		emit_signal("拖动")
+
 
 
 func _许可调整(允许: bool):
