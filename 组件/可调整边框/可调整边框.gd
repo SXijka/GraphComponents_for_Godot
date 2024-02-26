@@ -32,7 +32,7 @@ signal 拖动 ## 在边框进行拖动后立刻发出。
 
 
 func _ready() -> void:
-	_设置边框宽度(边框宽度)
+
 	本体.connect("gui_input", _进行拖动)
 	connect("gui_input", _获取鼠标方向)
 

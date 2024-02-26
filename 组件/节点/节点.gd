@@ -64,7 +64,7 @@ extends Control
 
 @export_subgroup("节点信息")
 ## 获取或设置节点的非全局大小。若要获取全局大小，使用[code]节点全局矩形.size[/code]
-@export var 节点大小: Vector2 = Vector2(110, 45):
+@export var 节点大小: Vector2:
 	get = _获取节点大小,
 	set = _设置节点大小
 
@@ -99,12 +99,6 @@ func _init() -> void:
 
 func _ready() -> void:
 	_边框.item_rect_changed.connect(func():emit_signal("大小变化"))
-	_设置名称(名称)
-	_设置标记颜色(标记颜色)
-	_设置背景颜色(背景颜色)
-	_设置背景点图案(背景点图案)
-	_设置背景点颜色(背景点颜色)
-	_设置垂直调整(允许垂直调整)
 
 	# 右键按钮以隐藏面板
 	# 中键按钮以使面板半透明
@@ -307,7 +301,7 @@ func _获取节点大小() -> Vector2:
 func _设置节点大小(新大小: Vector2) -> void:
 	节点大小 = 新大小
 	if not _边框:
-		return
+		await ready
 	_边框.size = 新大小
 
 
@@ -316,9 +310,11 @@ func _获取节点全局矩形() -> Rect2:
 
 
 func _设置节点全局矩形(新矩形: Rect2) -> void:
+	print(新矩形,名称)
 	节点全局矩形 = 新矩形
+	print(_边框)
 	if not _边框:
-		return
+		await ready
 	_边框.size = 新矩形.size * (_边框.size / _边框.get_global_rect().size)
 	_设置节点全局中心位置(新矩形.get_center())
 
@@ -330,7 +326,7 @@ func _获取节点全局中心位置() -> Vector2:
 func _设置节点全局中心位置(新中心: Vector2) -> void:
 	节点全局中心位置 = 新中心
 	if not _边框:
-		return
+		await ready
 	var 新位置 = position + (新中心 - _边框.get_global_rect().get_center())
 	position = 新位置
 
@@ -338,7 +334,7 @@ func _设置节点全局中心位置(新中心: Vector2) -> void:
 func _设置隐藏面板(是隐藏: bool):
 	隐藏面板 = 是隐藏
 	if not _面板背景:
-		return
+		await ready
 	if 是隐藏:
 		_面板背景.hide()
 	else:
@@ -348,16 +344,14 @@ func _设置隐藏面板(是隐藏: bool):
 func _设置名称(新名称):
 	名称 = 新名称
 	if not _节点名称:
-		return
+		await ready
 	_节点名称.text = 新名称
 
 
 func _设置标记颜色(新颜色: Color):
 	标记颜色 = 新颜色
-	if not _标题栏背景:
-		return
-	if not _底部背景:
-		return
+	if not _标题栏背景 or not _底部背景:
+		await ready
 	_标题栏背景.self_modulate = 新颜色
 	_底部背景.modulate = 新颜色
 
@@ -365,42 +359,42 @@ func _设置标记颜色(新颜色: Color):
 func _设置背景颜色(新颜色: Color):
 	背景颜色 = 新颜色
 	if not _面板背景:
-		return
+		await ready
 	_面板背景.self_modulate = 新颜色
 
 
 func _设置背景点颜色(新颜色: Color):
 	背景点颜色 = 新颜色
 	if not _背景点:
-		return
+		await ready
 	(_背景点 as 点背景).点颜色 = 新颜色
 
 
 func _设置背景点图案(新图案: String):
 	背景点图案 = 新图案
 	if not _背景点:
-		return
+		await ready
 	_背景点.图案 = 新图案
 
 
 func _设置垂直调整(允许: bool):
 	允许垂直调整 = 允许
 	if not _边框:
-		return
+		await ready
 	_边框.允许垂直调整 = 允许
 
 
 func _设置调整(允许: bool):
 	允许调整 = 允许
 	if not _边框:
-		return
+		await ready
 	_边框.允许调整 = 允许
 
 
 func _设置拖动(允许: bool):
 	允许拖动 = 允许
 	if not _边框:
-		return
+		await ready
 	_边框.允许拖动 = 允许
 
 

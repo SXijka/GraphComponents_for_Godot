@@ -24,6 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 0
 script = ExtResource("1_cg6ec")
+"节点大小" = Vector2(110, 45)
 "节点全局矩形" = Rect2(521, 301.5, 110, 45)
 "节点全局中心位置" = Vector2(576, 324)
 

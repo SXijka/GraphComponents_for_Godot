@@ -179,7 +179,7 @@ func _检测鼠标是否在当前接口() -> void:
 func _设置接口名称(新名称: String):
 	接口名称 = 新名称
 	if _名称 == null:
-		return
+		await ready
 	_名称.text = 接口名称
 
 
@@ -207,11 +207,9 @@ func _设置接口模式(新模式: String): # 设置接口模式，根据接口
 
 func _设置接点颜色(新颜色: Color):
 	接点颜色 = 新颜色
-	if _接点 == null:
-		return
+	if not _接点 or not _渐变背景:
+		await ready
 	_接点.self_modulate = 接点颜色
-	if _渐变背景 == null:
-		return
 	_渐变背景.border_color = Color(新颜色, 0.5)
 
 

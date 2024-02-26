@@ -27,7 +27,8 @@ window/stretch/aspect="expand"
 
 folder_colors={
 "res://场景/": "orange",
-"res://组件/": "green",
+"res://组件/": "pink",
+"res://组件/人物节点/": "pink",
 "res://组件/区域/": "pink",
 "res://组件/可调整边框/": "pink",
 "res://组件/接口/": "pink",

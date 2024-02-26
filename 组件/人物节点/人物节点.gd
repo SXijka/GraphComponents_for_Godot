@@ -29,7 +29,7 @@ extends 节点
 @export_subgroup("禁区弹出")
 @export var 碰撞弹出时间: float = 0.2
 
-@export var 碰撞弹出距离: float = 10.0
+@export var 碰撞弹出距离: float = 15.0
 
 @export var 自内部弹出时间: float = 1.0
 
@@ -113,7 +113,7 @@ func _响应自定义区域() -> void:
 func _设置禁区模式(新模式: bool) -> void:
 	禁区模式 = 新模式
 	if not _边框:
-		return
+		await ready
 	if 禁区模式:
 		if not _边框.拖动.is_connected(_被禁区弹出):
 			_边框.拖动.connect(_被禁区弹出)
@@ -124,7 +124,7 @@ func _设置禁区模式(新模式: bool) -> void:
 func _设置活动区模式(新模式: bool) -> void:
 	活动区模式 = 新模式
 	if not _边框:
-		return
+		await ready
 	if 活动区模式:
 		if not _边框.拖动.is_connected(_被活动区束缚):
 			_边框.拖动.connect(_被活动区束缚)
