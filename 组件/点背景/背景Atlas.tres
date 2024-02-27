@@ -1,8 +1,0 @@
-[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://d8dcqma3d1u2"]
-
-[ext_resource type="Texture2D" uid="uid://5n1qnlesu0si" path="res://组件/点背景/背景图标.svg" id="1_ch26t"]
-
-[resource]
-resource_local_to_scene = true
-atlas = ExtResource("1_ch26t")
-region = Rect2(352, 352, 64, 64)

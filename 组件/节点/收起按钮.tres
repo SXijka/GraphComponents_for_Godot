@@ -1,7 +1,0 @@
-[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://c4a7pxn3sdnne"]
-
-[ext_resource type="Texture2D" uid="uid://4tqfewjxilqe" path="res://组件/节点/基础图标.svg" id="1_ugg2f"]
-
-[resource]
-atlas = ExtResource("1_ugg2f")
-region = Rect2(93, 124, 76, 14)

@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" load_steps=3 format=3 uid="uid://dij8rt0uvwrbn"]
+
+[ext_resource type="FontFile" uid="uid://6jry5xjgyy21" path="res://addons/图形节点生成/插件配置/JetBrainsMono-Bold.ttf" id="1_4eul7"]
+[ext_resource type="FontFile" uid="uid://bc7t5l5s1kv1o" path="res://addons/图形节点生成/插件配置/得意黑.otf" id="2_6j3sg"]
+
+[resource]
+fallbacks = Array[Font]([ExtResource("2_6j3sg")])
+base_font = ExtResource("1_4eul7")

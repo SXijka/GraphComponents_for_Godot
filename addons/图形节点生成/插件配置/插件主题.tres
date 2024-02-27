@@ -1,0 +1,19 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://dabw8mlj3o0x3"]
+
+[ext_resource type="FontVariation" uid="uid://dij8rt0uvwrbn" path="res://addons/图形节点生成/插件配置/图形节点通用字体.tres" id="1_wyxib"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6p7n1"]
+bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.392157)
+border_width_left = 10
+border_color = Color(0.0980392, 0.0980392, 0.0980392, 0.392157)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_67b6w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_cga12"]
+
+[resource]
+Button/font_sizes/font_size = 50
+Button/fonts/font = ExtResource("1_wyxib")
+Button/styles/normal = SubResource("StyleBoxFlat_6p7n1")
+ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_67b6w")
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_cga12")

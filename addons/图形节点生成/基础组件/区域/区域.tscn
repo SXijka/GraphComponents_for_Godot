@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://gbcrhllxy4t6"]
+
+[ext_resource type="Script" path="res://addons/图形节点生成/基础组件/区域/区域.gd" id="1_y7q7s"]
+
+[node name="区域" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_y7q7s")
