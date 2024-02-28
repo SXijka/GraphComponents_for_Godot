@@ -130,7 +130,7 @@ func 添加_内容(内容物: Control) -> void: ## 向节点中添加内容物�
 	if 内容物.get_parent():
 		内容物.reparent(_面板)
 	else:
-		_面板.add_child(内容物)
+		_面板.add_child(内容物, true)
 	if not 内容扩展对齐:
 		return
 	for 属性 in 内容物.get_property_list():
@@ -151,7 +151,7 @@ func 添加_多个内容(内容物集: Array[Control]) -> void: ## 传入一个�
 
 		else:
 			内容物.show()
-			_面板.add_child(内容物)
+			_面板.add_child(内容物, true)
 
 		if not 内容扩展对齐:
 			continue

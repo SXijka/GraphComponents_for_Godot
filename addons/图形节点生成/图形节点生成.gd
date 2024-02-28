@@ -1,7 +1,7 @@
 @tool
 extends EditorPlugin
 
-var 插件面板
+var 插件面板: Control
 
 const _节点: = preload("res://addons/图形节点生成/基础组件/节点/节点.tscn")
 const _人物节点 = preload("res://addons/图形节点生成/基础组件/人物节点/人物节点.tscn")
@@ -14,7 +14,17 @@ const _可调整边框 = preload("res://addons/图形节点生成/基础组件/�
 const _点背景 = preload("res://addons/图形节点生成/基础组件/点背景/点背景.tscn")
 const _书节点 = preload("res://addons/图形节点生成/扩展组件/书节点.tscn")
 
+
 func _enter_tree() -> void:
+	加入插件面板功能()
+
+
+func _exit_tree() -> void:
+	remove_control_from_docks(插件面板)
+	插件面板.free()
+
+
+func 加入插件面板功能():
 	插件面板 = preload("res://addons/图形节点生成/插件配置/图形化节点.tscn").instantiate()
 	add_control_to_dock(DOCK_SLOT_LEFT_BR, 插件面板)
 
@@ -30,23 +40,9 @@ func _enter_tree() -> void:
 	插件面板.find_child("书节点").pressed.connect(func(): 生成(_书节点))
 
 
-func _exit_tree() -> void:
-	remove_control_from_docks(插件面板)
-	插件面板.free()
-	
-
-
 func 生成(场景:PackedScene) -> void:
-	var 选中节点 = get_editor_interface().get_selection().get_selected_nodes()
 	var 场景根节点 := get_editor_interface().get_edited_scene_root()
-	var 目标: Node
-	
-	var 实例 = 场景.instantiate(PackedScene.GEN_EDIT_STATE_MAIN)
-	if 选中节点.size() > 0:
-		选中节点[0].add_child(实例, true)
-	else:
-		场景根节点.add_child(实例, true)
+	var 实例 = 场景.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+	场景根节点.add_child(实例, true)
 	实例.owner = 场景根节点
-	get_tree().node_configuration_warning_changed.emit()
-	
 

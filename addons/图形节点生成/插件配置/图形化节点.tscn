@@ -13,11 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://dbs0253bffl58" path="res://addons/图形节点生成/插件配置/图片/书节点.atlastex" id="11_0yu3v"]
 
 [node name="图形化节点" type="TabContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+size_flags_horizontal = 3
 theme = ExtResource("1_bj0vg")
 
 [node name="基础组件" type="ScrollContainer" parent="."]

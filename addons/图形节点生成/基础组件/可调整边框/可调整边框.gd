@@ -1,4 +1,3 @@
-@tool
 ## 提供一个可供调整的边框，确保本体不可将输入继续传递到该组件，否则会影响该UI逻辑。
 class_name 可调整边框
 extends MarginContainer
@@ -32,14 +31,11 @@ signal 拖动 ## 在边框进行拖动后立刻发出。
 
 
 func _ready() -> void:
-
 	本体.connect("gui_input", _进行拖动)
 	connect("gui_input", _获取鼠标方向)
 
 
 func _获取本体() -> Control:
-	if Engine.is_editor_hint():
-		return 本体
 	if 本体 == null and not is_inside_tree():
 		push_warning(self, "在进入场景树前试图获取本体，检查器内序列化值尚未填入，当前变量“本体”为null")
 	elif 本体 == null:

@@ -15,5 +15,7 @@ border_color = Color(0.0980392, 0.0980392, 0.0980392, 0.392157)
 Button/font_sizes/font_size = 50
 Button/fonts/font = ExtResource("1_wyxib")
 Button/styles/normal = SubResource("StyleBoxFlat_6p7n1")
+ItemList/font_sizes/font_size = 30
+ItemList/fonts/font = ExtResource("1_wyxib")
 ScrollContainer/styles/panel = SubResource("StyleBoxEmpty_67b6w")
 TabContainer/styles/panel = SubResource("StyleBoxEmpty_cga12")

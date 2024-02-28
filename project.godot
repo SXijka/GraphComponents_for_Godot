@@ -10,6 +10,7 @@ config_version=5
 
 [application]
 
+config/name="图形化节点"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 run/max_fps=60
 

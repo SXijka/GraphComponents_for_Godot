@@ -53,6 +53,9 @@ func _ready() -> void:
 
 	_上一个中心 = _获取节点全局中心位置()
 
+	if Engine.is_editor_hint():
+		return
+
 	if 禁区模式:
 		if not _边框.拖动.is_connected(_被禁区弹出):
 			_边框.拖动.connect(_被禁区弹出)
