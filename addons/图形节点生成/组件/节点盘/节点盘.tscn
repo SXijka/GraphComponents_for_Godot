@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://c1rnxntsvafo5"]
 
-[ext_resource type="PackedScene" uid="uid://bfvnosgijqsuw" path="res://addons/图形节点生成/基础组件/点背景/点背景.tscn" id="1_o68i0"]
-[ext_resource type="Script" path="res://addons/图形节点生成/基础组件/节点盘/节点盘.gd" id="1_s3nx3"]
-[ext_resource type="PackedScene" uid="uid://caob8hi30yccc" path="res://addons/图形节点生成/基础组件/可调整边框/可调整边框.tscn" id="2_hjqtx"]
-[ext_resource type="Texture2D" uid="uid://5n1qnlesu0si" path="res://addons/图形节点生成/基础组件/点背景/背景图标.svg" id="2_hn1ih"]
+[ext_resource type="PackedScene" uid="uid://bfvnosgijqsuw" path="res://addons/图形节点生成/组件/点背景/点背景.tscn" id="1_o68i0"]
+[ext_resource type="Script" path="res://addons/图形节点生成/组件/节点盘/节点盘.gd" id="1_s3nx3"]
+[ext_resource type="PackedScene" uid="uid://caob8hi30yccc" path="res://addons/图形节点生成/组件/可调整边框/可调整边框.tscn" id="2_hjqtx"]
+[ext_resource type="Texture2D" uid="uid://5n1qnlesu0si" path="res://addons/图形节点生成/组件/点背景/背景图标.svg" id="2_hn1ih"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eqsbr"]
 resource_local_to_scene = true

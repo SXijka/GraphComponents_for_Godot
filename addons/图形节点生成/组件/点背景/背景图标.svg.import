@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://5n1qnlesu0si"
-path="res://.godot/imported/背景图标.svg-9357f94ea36bf70afdf0d5b4c8517368.ctex"
+path="res://.godot/imported/背景图标.svg-9ec4b3de990dcf3b3f410b394d39ab16.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/图形节点生成/基础组件/点背景/背景图标.svg"
-dest_files=["res://.godot/imported/背景图标.svg-9357f94ea36bf70afdf0d5b4c8517368.ctex"]
+source_file="res://addons/图形节点生成/组件/点背景/背景图标.svg"
+dest_files=["res://.godot/imported/背景图标.svg-9ec4b3de990dcf3b3f410b394d39ab16.ctex"]
 
 [params]
 

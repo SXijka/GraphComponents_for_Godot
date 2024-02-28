@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://gbcrhllxy4t6"]
 
-[ext_resource type="Script" path="res://addons/图形节点生成/基础组件/区域/区域.gd" id="1_y7q7s"]
+[ext_resource type="Script" path="res://addons/图形节点生成/组件/区域/区域.gd" id="1_y7q7s"]
 
 [node name="区域" type="Control"]
 layout_mode = 3

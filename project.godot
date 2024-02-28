@@ -28,18 +28,17 @@ enabled=PackedStringArray("res://addons/图形节点生成/plugin.cfg")
 
 folder_colors={
 "res://addons/": "gray",
-"res://addons/图形节点生成/基础组件/": "pink",
-"res://addons/图形节点生成/基础组件/人物节点/": "pink",
-"res://addons/图形节点生成/基础组件/区域/": "pink",
-"res://addons/图形节点生成/基础组件/可调整边框/": "pink",
-"res://addons/图形节点生成/基础组件/接口/": "pink",
-"res://addons/图形节点生成/基础组件/文本节点/": "pink",
-"res://addons/图形节点生成/基础组件/点背景/": "pink",
-"res://addons/图形节点生成/基础组件/窗口缩放/": "pink",
-"res://addons/图形节点生成/基础组件/节点/": "pink",
-"res://addons/图形节点生成/基础组件/节点盘/": "pink",
-"res://addons/图形节点生成/基础组件/连接代理/": "pink",
-"res://addons/图形节点生成/扩展组件/": "green"
+"res://addons/图形节点生成/组件/": "pink",
+"res://addons/图形节点生成/组件/人物节点/": "pink",
+"res://addons/图形节点生成/组件/区域/": "pink",
+"res://addons/图形节点生成/组件/可调整边框/": "pink",
+"res://addons/图形节点生成/组件/接口/": "pink",
+"res://addons/图形节点生成/组件/文本节点/": "pink",
+"res://addons/图形节点生成/组件/点背景/": "pink",
+"res://addons/图形节点生成/组件/窗口缩放/": "pink",
+"res://addons/图形节点生成/组件/节点/": "pink",
+"res://addons/图形节点生成/组件/节点盘/": "pink",
+"res://addons/图形节点生成/组件/连接代理/": "pink"
 }
 
 [gui]

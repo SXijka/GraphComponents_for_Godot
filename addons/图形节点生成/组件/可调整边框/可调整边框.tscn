@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://caob8hi30yccc"]
 
-[ext_resource type="Script" path="res://addons/图形节点生成/基础组件/可调整边框/可调整边框.gd" id="1_8c4hr"]
+[ext_resource type="Script" path="res://addons/图形节点生成/组件/可调整边框/可调整边框.gd" id="1_8c4hr"]
 
 [node name="可调整边框" type="MarginContainer"]
 anchors_preset = 8

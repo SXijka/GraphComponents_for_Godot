@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cjmqfgvlymvaa"]
 
-[ext_resource type="Script" path="res://addons/图形节点生成/基础组件/接口/接口.gd" id="1_ykose"]
-[ext_resource type="Theme" uid="uid://d4magcxa3r2x6" path="res://addons/图形节点生成/基础组件/接口/接口主题.tres" id="3_5rugr"]
-[ext_resource type="Texture2D" uid="uid://yde2bno8poge" path="res://addons/图形节点生成/基础组件/接口/接口图形.tres" id="3_bbakn"]
+[ext_resource type="Script" path="res://addons/图形节点生成/组件/接口/接口.gd" id="1_ykose"]
+[ext_resource type="Theme" uid="uid://d4magcxa3r2x6" path="res://addons/图形节点生成/组件/接口/接口主题.tres" id="3_5rugr"]
+[ext_resource type="Texture2D" uid="uid://yde2bno8poge" path="res://addons/图形节点生成/组件/接口/接口图形.tres" id="3_bbakn"]
 
 [node name="接口" type="HBoxContainer"]
 custom_minimum_size = Vector2(100, 30)
